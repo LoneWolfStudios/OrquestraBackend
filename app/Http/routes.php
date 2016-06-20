@@ -1,16 +1,97 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+Route::group([
+    'namespace' => 'Auth',
+    'prefix' => 'auth',
+    'middleware' => 'guest'
+], function () {
+    
+    Route::get('/login', 'AuthController@getIndex');
+    Route::post('/login', 'AuthController@postIndex');
+    
+});
+
+Route::group([
+    'namespace' => 'Auth',
+    'prefix' => 'auth',
+    'middleware' => 'auth'
+], function () {
+    
+    Route::get('/logout', 'AuthController@getLogout');
+    
+});
+
+Route::group([
+    'namespace' => 'Api',
+    'prefix' => 'api'
+], function () {
+    
+    Route::group([
+        'namespace' => 'v1',
+        'prefix' => 'v1'
+    ], function () {
+        
+        Route::group([
+            'prefix' => 'action'
+        ], function () {
+        });
+        
+        Route::group([
+            'prefix' => 'device'
+        ], function () {
+        });
+
+        Route::group([
+            'prefix' => 'pin'
+        ], function () {
+        });
+        
+        Route::group([
+            'prefix' => 'constraint'
+        ], function () {
+        });
+        
+        Route::group([
+            'prefix' => 'user'
+        ], function () {
+        });
+
+        Route::group([
+            'prefix' => 'visualization'
+        ], function () {
+        });
+        
+    });
+    
+});
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->to('web');
+});
+
+Route::group([
+    'namespace' => 'Web',
+    'prefix' => 'web'
+], function () {
+    
+    Route::get('/', 'IndexController@getIndex');
+    
+});
+
+Route::group([
+    'namespace' => 'User',
+    'prefix' => 'user'
+], function () {
+    
+    Route::get('/', 'IndexController@getIndex');
+
+});
+
+Route::group([
+    'namespace' => 'Admin',
+    'prefix' => 'admin'
+], function () {
+
+    Route::get('/', 'IndexController@getIndex');
+    
 });

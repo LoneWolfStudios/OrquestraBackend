@@ -1,0 +1,9 @@
+{
+  "name": "orquestra-user",
+  "directory": "bower_components",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.5.7",
+    "angular-ui-router": "ui-route#^0.3.1"
+  }
+}

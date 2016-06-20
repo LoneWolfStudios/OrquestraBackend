@@ -1,0 +1,7 @@
+{
+  "name": "orquestra-web",
+  "directory": "bower_components",
+  "private": true,
+  "dependencies": {
+  }
+}
