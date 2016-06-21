@@ -1,1 +1,1 @@
-<h1>Web</h1>
+<h1>Web - <% $STATIC_URL %></h1>

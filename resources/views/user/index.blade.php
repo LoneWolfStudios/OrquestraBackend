@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="OrquestraUser">
 
 <!--================================================================================
 	Item Name: Materialize - Material Design Admin Template
@@ -15,56 +15,43 @@
   <meta name="msapplication-tap-highlight" content="no">
   <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
   <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-  <title>Page Blank | Materialize - Material Design Admin Template</title>
+  <title>Orquestra - User</title>
 
-  <!-- Favicons-->
   <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
-  <!-- Favicons-->
   <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
-  <!-- For iPhone -->
   <meta name="msapplication-TileColor" content="#00bcd4">
   <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
-  <!-- For Windows Phone -->
+  
 
+  <link href="<% $STATIC_URL %>/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="<% $STATIC_URL %>/css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="<% $STATIC_URL %>/css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
-  <!-- CORE CSS-->
-  <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <!-- Custome CSS-->    
-  <link href="css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-
-  <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-  <link href="js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="<% $STATIC_URL %>/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="<% $STATIC_URL %>/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="<% $STATIC_URL %>/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 </head>
 
 <body>
-  <!-- Start Page Loading -->
   <div id="loader-wrapper">
       <div id="loader"></div>        
       <div class="loader-section section-left"></div>
       <div class="loader-section section-right"></div>
   </div>
-  <!-- End Page Loading -->
-
-  <!-- //////////////////////////////////////////////////////////////////////////// -->
-
-  <!-- START HEADER -->
+  
   <header id="header" class="page-topbar">
-        <!-- start header nav-->
         <div class="navbar-fixed">
             <nav class="navbar-color">
                 <div class="nav-wrapper">
                     <ul class="left">                      
-                      <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="images/materialize-logo.png" alt="materialize logo"></a> <span class="logo-text">Materialize</span></h1></li>
+                      <li><h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="<% $STATIC_URL %>/images/materialize-logo.png" alt="materialize logo"></a> <span class="logo-text">Materialize</span></h1></li>
                     </ul>
                     <div class="header-search-wrapper hide-on-med-and-down">
                         <i class="mdi-action-search"></i>
                         <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize"/>
                     </div>
                     <ul class="right hide-on-med-and-down">
-                        <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button"  data-activates="translation-dropdown"><img src="images/flag-icons/United-States.png" alt="USA" /></a>
+                        <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light translation-button"  data-activates="translation-dropdown"><img src="<% $STATIC_URL %>/images/flag-icons/United-States.png" alt="USA" /></a>
                         </li>
                         <li><a href="javascript:void(0);" class="waves-effect waves-block waves-light toggle-fullscreen"><i class="mdi-action-settings-overscan"></i></a>
                         </li>
@@ -75,23 +62,21 @@
                         <li><a href="#" data-activates="chat-out" class="waves-effect waves-block waves-light chat-collapse"><i class="mdi-communication-chat"></i></a>
                         </li>
                     </ul>
-                    <!-- translation-button -->
                     <ul id="translation-dropdown" class="dropdown-content">
                       <li>
-                        <a href="#!"><img src="images/flag-icons/United-States.png" alt="English" />  <span class="language-select">English</span></a>
+                        <a href="#!"><img src="<% $STATIC_URL %>/images/flag-icons/United-States.png" alt="English" />  <span class="language-select">English</span></a>
                       </li>
                       <li>
-                        <a href="#!"><img src="images/flag-icons/France.png" alt="French" />  <span class="language-select">French</span></a>
+                        <a href="#!"><img src="<% $STATIC_URL %>/images/flag-icons/France.png" alt="French" />  <span class="language-select">French</span></a>
                       </li>
                       <li>
-                        <a href="#!"><img src="images/flag-icons/China.png" alt="Chinese" />  <span class="language-select">Chinese</span></a>
+                        <a href="#!"><img src="<% $STATIC_URL %>/images/flag-icons/China.png" alt="Chinese" />  <span class="language-select">Chinese</span></a>
                       </li>
                       <li>
-                        <a href="#!"><img src="images/flag-icons/Germany.png" alt="German" />  <span class="language-select">German</span></a>
+                        <a href="#!"><img src="<% $STATIC_URL %>/images/flag-icons/Germany.png" alt="German" />  <span class="language-select">German</span></a>
                       </li>
                       
                     </ul>
-                    <!-- notifications-dropdown -->
                     <ul id="notifications-dropdown" class="dropdown-content">
                       <li>
                         <h5>NOTIFICATIONS <span class="new badge">5</span></h5>
@@ -121,24 +106,16 @@
                 </div>
             </nav>
         </div>
-        <!-- end header nav-->
   </header>
-  <!-- END HEADER -->
-
-  <!-- //////////////////////////////////////////////////////////////////////////// -->
-
-  <!-- START MAIN -->
   <div id="main">
-    <!-- START WRAPPER -->
     <div class="wrapper">
 
-      <!-- START LEFT SIDEBAR NAV-->
       <aside id="left-sidebar-nav">
         <ul id="slide-out" class="side-nav fixed leftside-navigation">
             <li class="user-details cyan darken-2">
             <div class="row">
                 <div class="col col s4 m4 l4">
-                    <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image">
+                    <img src="<% $STATIC_URL %>/images/avatar.jpg" alt="" class="circle responsive-img valign profile-image">
                 </div>
                 <div class="col col s8 m8 l8">
                     <ul id="profile-dropdown" class="dropdown-content">
@@ -395,16 +372,9 @@
         </ul>
         <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i class="mdi-navigation-menu"></i></a>
         </aside>
-      <!-- END LEFT SIDEBAR NAV-->
-
-      <!-- //////////////////////////////////////////////////////////////////////////// -->
-
-      <!-- START CONTENT -->
       <section id="content">
         
-        <!--breadcrumbs start-->
         <div id="breadcrumbs-wrapper">
-            <!-- Search for small screen -->
             <div class="header-search-wrapper grey hide-on-large-only">
                 <i class="mdi-action-search active"></i>
                 <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
@@ -422,18 +392,9 @@
             </div>
           </div>
         </div>
-        <!--breadcrumbs end-->
-        
-
-        <!--start container-->
+  
         <div class="container">
-          <div class="section">
-
-            <p class="caption">A Simple Blank Page to use it for your custome design and elements.</p>
-            <div class="divider"></div>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-          </div>
-          <!-- Floating Action Button -->
+          <div class="section" ui-view="MainContent"></div>
             <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
                 <a class="btn-floating btn-large">
                   <i class="mdi-action-stars"></i>
@@ -445,14 +406,8 @@
                   <li><a href="app-email.html" class="btn-floating blue"><i class="large mdi-communication-email"></i></a></li>
                 </ul>
             </div>
-            <!-- Floating Action Button -->
         </div>
-        <!--end container-->
       </section>
-      <!-- END CONTENT -->
-
-      <!-- //////////////////////////////////////////////////////////////////////////// -->
-      <!-- START RIGHT SIDEBAR NAV-->
       <aside id="right-sidebar-nav">
         <ul id="chat-out" class="side-nav rightside-navigation">
             <li class="li-hover">
@@ -543,7 +498,7 @@
                     <div class="collapsible-header red white-text"><i class="mdi-action-stars"></i>Favorite Associates</div>
                     <div class="collapsible-body favorite-associates">
                         <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
+                            <div class="col s4"><img src="<% $STATIC_URL %>/images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
                             </div>
                             <div class="col s8">
                                 <p>Eileen Sideways</p>
@@ -551,7 +506,7 @@
                             </div>
                         </div>
                         <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
+                            <div class="col s4"><img src="<% $STATIC_URL %>/images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
                             </div>
                             <div class="col s8">
                                 <p>Zaham Sindil</p>
@@ -559,7 +514,7 @@
                             </div>
                         </div>
                         <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
+                            <div class="col s4"><img src="<% $STATIC_URL %>/images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
                             </div>
                             <div class="col s8">
                                 <p>Renov Leongal</p>
@@ -567,7 +522,7 @@
                             </div>
                         </div>
                         <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
+                            <div class="col s4"><img src="<% $STATIC_URL %>/images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
                             </div>
                             <div class="col s8">
                                 <p>Weno Carasbong</p>
@@ -575,7 +530,7 @@
                             </div>
                         </div>
                         <div class="favorite-associate-list chat-out-list row">
-                            <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
+                            <div class="col s4"><img src="<% $STATIC_URL %>/images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
                             </div>
                             <div class="col s8">
                                 <p>Nusja Nawancali</p>
@@ -588,50 +543,22 @@
             </li>
         </ul>
       </aside>
-      <!-- LEFT RIGHT SIDEBAR NAV-->
-
+  
     </div>
-    <!-- END WRAPPER -->
-
   </div>
-  <!-- END MAIN -->
-
-
-
-  <!-- //////////////////////////////////////////////////////////////////////////// -->
-
-  <!-- START FOOTER -->
-  <footer class="page-footer">
-    <div class="footer-copyright">
-      <div class="container">
-        <span>Copyright © 2015 <a class="grey-text text-lighten-4" href="http://themeforest.net/user/geekslabs/portfolio?ref=geekslabs" target="_blank">GeeksLabs</a> All rights reserved.</span>
-        <span class="right"> Design and Developed by <a class="grey-text text-lighten-4" href="http://geekslabs.com/">GeeksLabs</a></span>
-        </div>
-    </div>
-  </footer>
-  <!-- END FOOTER -->
-
-
-
-    <!-- ================================================
-    Scripts
-    ================================================ -->
-    
-    <!-- jQuery Library -->
-    <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>    
-    <!--materialize js-->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+  
+    <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/jquery-1.11.2.min.js"></script>    
+    <script type="text/javascript" src="<% $STATIC_URL %>/js/materialize.min.js"></script>
     <!--prism
-    <script type="text/javascript" src="js/prism/prism.js"></script>-->
-    <!--scrollbar-->
-    <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- chartist -->
-    <script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>   
+    <script type="text/javascript" src="<% $STATIC_URL %>/js/prism/prism.js"></script>-->
+    <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/chartist-js/chartist.min.js"></script>   
+    <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins.min.js"></script>
+    <script type="text/javascript" src="<% $STATIC_URL %>/js/custom-script.js"></script>
+    <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <script type="text/javascript" src="js/plugins.min.js"></script>
-    <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="js/custom-script.js"></script>
+    <script type="text/javascript" src="<% $STATIC_URL %>/dist/0.0.1/orquestra.min.js"></script>
     
 </body>
 

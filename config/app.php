@@ -155,6 +155,7 @@ return [
         Orquestra\Providers\AuthServiceProvider::class,
         Orquestra\Providers\EventServiceProvider::class,
         Orquestra\Providers\RouteServiceProvider::class,
+        Orquestra\Providers\ViewComposerServiceProvider::class
 
     ],
 

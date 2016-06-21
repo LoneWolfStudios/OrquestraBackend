@@ -85,6 +85,15 @@ Route::group([
     
     Route::get('/', 'IndexController@getIndex');
 
+    Route::group([
+        'namespace' => 'Dashboard',
+        'prefix' => 'dashboard'
+    ], function () {
+        
+        Route::get('/', 'ViewController@getIndex');
+
+    });
+
 });
 
 Route::group([
