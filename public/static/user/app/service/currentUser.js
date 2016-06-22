@@ -1,6 +1,6 @@
 OrquestraUser.service('CurrentUser', ['$http', '$q', 'User',
     function ($http, $q, User) {
-        var service = {};
+        var service = this;
         
         var _user = false;
         
@@ -25,7 +25,5 @@ OrquestraUser.service('CurrentUser', ['$http', '$q', 'User',
             
             return deferred.promise;
         };
-        
-        return service;
     }
 ]);

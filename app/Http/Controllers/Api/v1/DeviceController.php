@@ -11,6 +11,11 @@ use Orquestra\Http\Controllers\Api\ApiController;
 class DeviceController extends ApiController
 {
     
+    public function find($id) 
+    {
+        return Device::find($id);
+    }
+    
     public function byUser($id) 
     {
         return Device::where('user_id', $id)

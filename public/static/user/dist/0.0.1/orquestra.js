@@ -22,12 +22,24 @@ OrquestraUser.run([
     }
 ]);
 
-OrquestraUser.factory('Device', [
-    function () {
+OrquestraUser.factory('Device', ['PinRepository',
+    function (PinRepository) {
         var Device = new Function();
+        
+        Device.prototype.pins = function () {
+            return PinRepository.byDevice(this.id);
+        };
         
         return Device;
     }
+]);
+
+OrquestraUser.factory('Pin', [
+    function () {
+        var Pin = new Function();
+        
+        return Pin;
+    }    
 ]);
 
 OrquestraUser.factory('User', ['DeviceRepository',
@@ -42,9 +54,19 @@ OrquestraUser.factory('User', ['DeviceRepository',
     }
 ]);
 
+OrquestraUser.service('Breadcumb', [
+    function () {
+        var service = this;
+        
+        service.title = "Teste";
+        
+        service.items = [];
+    }
+]);
+
 OrquestraUser.service('CurrentUser', ['$http', '$q', 'User',
     function ($http, $q, User) {
-        var service = {};
+        var service = this;
         
         var _user = false;
         
@@ -69,14 +91,28 @@ OrquestraUser.service('CurrentUser', ['$http', '$q', 'User',
             
             return deferred.promise;
         };
-        
-        return service;
     }
 ]);
 
 OrquestraUser.service('DeviceRepository', ['$http', '$q', 'Device',
     function ($http, $q, Device) {
         var repository = {};
+        
+        repository.find = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("device/" + id)).then(
+                function (res) {
+                    var device = new Device();
+                        
+                    attr(device, res.data);
+                    
+                    deferred.resolve(device);
+                }
+            );
+            
+            return deferred.promise;
+        };
         
         repository.byUser = function (id) {
             var deferred = $q.defer();
@@ -102,15 +138,78 @@ OrquestraUser.service('DeviceRepository', ['$http', '$q', 'Device',
     }
 ]);
 
-OrquestraUser.controller('DashboardIndexCtrl', ['$scope',
-    function ($scope) {
+OrquestraUser.service('PinRepository', ['$q', '$http', 'Pin',
+    function ($q, $http, Pin) {
+        var repository = {};
+        
+        repository.byDevice = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("pin/byDevice/" + id)).then(
+                function (res) {
+                    var pins = _.map(res.data, function (json) {
+                        var pin = new Pin();
+                        
+                        attr(pin, json);
+                        
+                        return pin;
+                    });
+                    
+                    deferred.resolve(pins);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        return repository;
+    }
+]);
+
+OrquestraUser.controller('BreadcumbCtrl', ['$scope', 'Breadcumb',
+    function ($scope, Breadcumb) {
+        $scope.breadcumb = Breadcumb;
+    }
+])
+
+OrquestraUser.controller('DashboardIndexCtrl', ['$scope', 'Breadcumb',
+    function ($scope, Breadcumb) {
+        Breadcumb.title = "Dashboard";
+        Breadcumb.items = [{ text: 'Dashboard' }];
+        
         $scope.test = "User Dashboard Index";
     }
 ]);
 
-OrquestraUser.controller('DeviceDetailCtrl', ['$scope',
+OrquestraUser.controller('DeviceDetailCtrl', [
+    '$scope', '$stateParams', 'Breadcumb', 'DeviceRepository', 'PinRepository',
+    function ($scope, $stateParams, Breadcumb, DeviceRepository, PinRepository) {
+        
+        Breadcumb.items = [
+            { url: 'home', text: 'Dashboard' },
+            { text: 'Dispositivo' }
+        ];
+        
+        DeviceRepository.find($stateParams.deviceId).then(
+            function (device) {
+                $scope.device = device;
+                
+                Breadcumb.title = device.nickname;
+                
+                PinRepository.byDevice(device.id).then(
+                    function (pins) {
+                        $scope.pins = pins;
+                    }
+                );
+            }
+        );
+        
+    }
+]);
+
+OrquestraUser.controller('FixedButtonCtrl', ['$scope',
     function ($scope) {
-        $scope.test = "Device Detail";
+        
     }
 ]);
 
@@ -147,8 +246,17 @@ OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
                 }
             })
             
+            .state('device_create', {
+                url: '/device/create',
+                views: {
+                    MainContent: {
+                        templateUrl: view('device/create')
+                    }
+                }
+            })
+            
             .state('device_detail', {
-                url: '/device/{id}',
+                url: '/device/{deviceId}',
                 views: {
                     MainContent: {
                         templateUrl: view('device/detail')

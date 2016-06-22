@@ -18,6 +18,7 @@ class CreateDevicesTable extends Migration
             $table->unsignedInteger('user_id')->nullable(false);
             
             $table->string('nickname')->nullable(false);
+            $table->string('desc')->nullable(true);
             
             $table->boolean('active')->default(true);
             $table->timestamps();

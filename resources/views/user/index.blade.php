@@ -146,8 +146,8 @@
                     <li class="li-hover"><div class="divider"></div></li>
                     
                     <li ng-repeat="device in devices" class="bold">
-                        <a ui-sref="device_detail({id: {{device.id}} })" class="waves-effect waves-cyan">
-                            <i class="mdi-action-favorite"></i> {{ device.nickname }} <span class="new badge">4</span>
+                        <a ui-sref="device_detail({deviceId: {{device.id}} })" class="waves-effect waves-cyan">
+                            <i class="mdi-action-favorite"></i> {{ device.nickname }} 
                         </a>
                     </li>
                     
@@ -160,7 +160,7 @@
       
       <section id="content">
         
-        <div id="breadcrumbs-wrapper">
+        <div id="breadcrumbs-wrapper" ng-controller="BreadcumbCtrl">
             <div class="header-search-wrapper grey hide-on-large-only">
                 <i class="mdi-action-search active"></i>
                 <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
@@ -168,11 +168,12 @@
           <div class="container">
             <div class="row">
               <div class="col s12 m12 l12">
-                <h5 class="breadcrumbs-title">Blank Page</h5>
+                <h5 class="breadcrumbs-title">{{ breadcumb.title }}</h5>
                 <ol class="breadcrumbs">
-                    <li><a href="index.html">Dashboard</a></li>
-                    <li><a href="#">Pages</a></li>
-                    <li class="active">Blank Page</li>
+                    <li ng-repeat="b in breadcumb.items" ng-class="{active:$last}">
+                        <a ng-if="!$last" ui-sref="{{b.url}}">{{b.text}}</a>
+                        <span ng-if="$last">{{b.text}}</span>
+                    </li>
                 </ol>
               </div>
             </div>
@@ -181,15 +182,15 @@
   
         <div class="container">
           <div class="section" ui-view="MainContent"></div>
-            <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
+            <div class="fixed-action-btn" style="bottom: 50px; right: 19px;" ng-controller="FixedButtonCtrl">
                 <a class="btn-floating btn-large">
-                  <i class="mdi-content-add"></i>
+                  <i class="mdi-navigation-menu"></i>
                 </a>
                 <ul>
-                  <li><a href="css-helpers.html" class="btn-floating red"><i class="large mdi-communication-live-help"></i></a></li>
                   <li><a href="app-widget.html" class="btn-floating yellow darken-1"><i class="large mdi-device-now-widgets"></i></a></li>
                   <li><a href="app-calendar.html" class="btn-floating green"><i class="large mdi-editor-insert-invitation"></i></a></li>
                   <li><a href="app-email.html" class="btn-floating blue"><i class="large mdi-communication-email"></i></a></li>
+                  <li><a ui-sref="device_create" class="btn-floating red"><i class="large mdi-content-add"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -342,8 +343,10 @@
     <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins.min.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/js/custom-script.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/underscore/underscore-min.js"></script>
+    <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/sparkline/dist/jquery.sparkline.min.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    
     
     <script type="text/javascript" src="<% $STATIC_URL %>/dist/0.0.1/orquestra.js"></script>
     

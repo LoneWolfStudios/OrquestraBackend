@@ -5,22 +5,30 @@
     <div class="col s12 m12 l6">
       <ul id="projects-collection" class="collection">
         <li class="collection-item avatar">
-          <i class="mdi-file-folder circle light-blue"></i>
+          <i class="mdi-action-label circle light-blue"></i>
           <span class="collection-header">Pinos</span>
           <p>Pinos configurados para este dispositivo</p>
-          <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+          <a title="Novo Pino" class="secondary-content"><i class="mdi-content-add small"></i></a>
         </li>
-        <li class="collection-item">
+        <li class="collection-item" ng-repeat="pin in pins">
           <div class="row">
-            <div class="col s6">
-              <p class="collections-title">Web App</p>
-              <p class="collections-content">AEC Company</p>
+            <div class="col s5">
+              <p class="collections-title">{{ pin.name }}</p>
+              <p class="collections-content">{{ pin.desc | limitTo:30 }}</p>
             </div>
             <div class="col s3">
-              <span class="task-cat cyan">Development</span>
+              <small class="col s12">Gráfico Tempo Real</small>
             </div>
-            <div class="col s3">
-              <div id="project-line-1"></div>
+            <div class="col s4 right-align">
+              <a class="btn-floating waves-effect waves-light green" title="Visualizar">
+                <i class="mdi-action-search"></i>
+              </a>
+              <a class="btn-floating waves-effect waves-light orange" title="Editar">
+                <i class="mdi-editor-mode-edit"></i>
+              </a>
+              <a class="btn-floating waves-effect waves-light red" title="Deletar">
+                <i class="mdi-action-delete"></i>
+              </a>
             </div>
           </div>
         </li>
@@ -31,7 +39,7 @@
     <div class="col s12 m12 l6">
       <ul id="issues-collection" class="collection">
         <li class="collection-item avatar">
-          <i class="mdi-action-bug-report red circle"></i>
+          <i class="mdi-editor-insert-chart green circle"></i>
           <span class="collection-header">Visualizações</span>
           <p>As visualizações configuradas para este dispositivo</p>
           <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
@@ -55,6 +63,69 @@
        </li>
        
    </ul>
+   </div>
  </div>
+ 
+ <div class="row">
+    <div class="col s12 m12 l6">
+      <ul id="issues-collection" class="collection">
+        <li class="collection-item avatar">
+          <i class="mdi-editor-insert-chart red circle"></i>
+          <span class="collection-header">Limites</span>
+          <p>Os limites configuradas para este dispositivo</p>
+          <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+        </li>
+        
+        <li class="collection-item">
+          <div class="row">
+            <div class="col s7">
+              <p class="collections-title"><strong>#102</strong> Home Page</p>
+              <p class="collections-content">Web Project</p>
+            </div>
+            <div class="col s2">
+              <span class="task-cat pink accent-2">P1</span>
+            </div>
+            <div class="col s3">
+              <div class="progress">
+               <div class="determinate" style="width: 70%"></div>   
+             </div>                                                
+           </div>
+         </div>
+       </li>
+       
+   </ul>
+   </div>
+   
+   <div class="col s12 m12 l6">
+      <ul id="issues-collection" class="collection">
+        <li class="collection-item avatar">
+          <i class="mdi-editor-insert-chart silver circle"></i>
+          <span class="collection-header">Ações</span>
+          <p>As ações atutomazidas configuradas para este dispositivo</p>
+          <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+        </li>
+        
+        <li class="collection-item">
+          <div class="row">
+            <div class="col s7">
+              <p class="collections-title"><strong>#102</strong> Home Page</p>
+              <p class="collections-content">Web Project</p>
+            </div>
+            <div class="col s2">
+              <span class="task-cat pink accent-2">P1</span>
+            </div>
+            <div class="col s3">
+              <div class="progress">
+               <div class="determinate" style="width: 70%"></div>   
+             </div>                                                
+           </div>
+         </div>
+       </li>
+       
+   </ul>
+   </div>
+   
+ </div>
+ 
 </div>
 <!-- Floating Action Button -->

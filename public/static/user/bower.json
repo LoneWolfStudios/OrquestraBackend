@@ -5,6 +5,7 @@
   "dependencies": {
     "angular": "^1.5.7",
     "angular-ui-router": "ui-route#^0.3.1",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "sparkline": "^2.1.2"
   }
 }

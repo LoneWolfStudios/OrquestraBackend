@@ -39,7 +39,8 @@ Route::group([
         Route::group([
             'prefix' => 'device'
         ], function () {
-            
+        
+            Route::get('/{id}', 'DeviceController@find');    
             Route::get('byUser/{id}', 'DeviceController@byUser');
             
         });
@@ -47,6 +48,9 @@ Route::group([
         Route::group([
             'prefix' => 'pin'
         ], function () {
+        
+            Route::get('byDevice/{id}', 'PinController@byDevice');
+        
         });
         
         Route::group([
@@ -107,6 +111,7 @@ Route::group([
     ], function () {
         
         Route::get('/detail', 'ViewController@getDetail');
+        Route::get('/create', 'ViewController@getCreate');
         
     });
 

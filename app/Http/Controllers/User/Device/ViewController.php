@@ -14,5 +14,10 @@ class ViewController extends Controller
     {
         return view('user.device.detail');
     }
+    
+    public function getCreate() 
+    {
+        return view('user.device.create');
+    }
 
 }
