@@ -17,6 +17,7 @@ class CreateConstraintsTable extends Migration
             
             $table->unsignedInteger('device_id')->nullable(false);
             
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

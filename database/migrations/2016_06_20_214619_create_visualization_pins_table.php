@@ -14,6 +14,8 @@ class CreateVisualizationPinsTable extends Migration
     {
         Schema::create('visualization_pins', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

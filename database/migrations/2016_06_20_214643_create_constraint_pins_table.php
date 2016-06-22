@@ -14,6 +14,8 @@ class CreateConstraintPinsTable extends Migration
     {
         Schema::create('constraint_pins', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

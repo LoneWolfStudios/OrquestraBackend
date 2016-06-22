@@ -6,8 +6,8 @@ Route::group([
     'middleware' => 'guest'
 ], function () {
     
-    Route::get('/login', 'AuthController@getIndex');
-    Route::post('/login', 'AuthController@postIndex');
+    Route::get('/login', 'AuthController@getLogin');
+    Route::post('/login', 'AuthController@postLogin');
     
 });
 
@@ -39,6 +39,9 @@ Route::group([
         Route::group([
             'prefix' => 'device'
         ], function () {
+            
+            Route::get('byUser/{id}', 'DeviceController@byUser');
+            
         });
 
         Route::group([
@@ -54,6 +57,9 @@ Route::group([
         Route::group([
             'prefix' => 'user'
         ], function () {
+            
+            Route::get('/', 'UserController@index');
+            
         });
 
         Route::group([
@@ -80,7 +86,8 @@ Route::group([
 
 Route::group([
     'namespace' => 'User',
-    'prefix' => 'user'
+    'prefix' => 'user',
+    'middleware' => 'auth'
 ], function () {
     
     Route::get('/', 'IndexController@getIndex');
@@ -94,11 +101,21 @@ Route::group([
 
     });
 
+    Route::group([
+        'namespace' => 'Device',
+        'prefix' => 'device'
+    ], function () {
+        
+        Route::get('/detail', 'ViewController@getDetail');
+        
+    });
+
 });
 
 Route::group([
     'namespace' => 'Admin',
-    'prefix' => 'admin'
+    'prefix' => 'admin',
+    'middleware' => 'auth'
 ], function () {
 
     Route::get('/', 'IndexController@getIndex');

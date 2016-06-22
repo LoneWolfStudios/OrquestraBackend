@@ -14,7 +14,7 @@ class ViewComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer(
-            ['web.*', 'user.*', 'admin.*'], 'Orquestra\Http\ViewComposers\GeneralComposer'
+            ['web.*', 'user.*', 'admin.*', 'auth.*'], 'Orquestra\Http\ViewComposers\GeneralComposer'
         );
  
         view()->composer(
@@ -29,6 +29,9 @@ class ViewComposerServiceProvider extends ServiceProvider
             ['admin.*'], 'Orquestra\Http\ViewComposers\Admin\GeneralComposer'
         );
         
+        view()->composer(
+            ['auth.*'], 'Orquestra\Http\ViewComposers\Auth\GeneralComposer'
+        );
     }
 
     /**

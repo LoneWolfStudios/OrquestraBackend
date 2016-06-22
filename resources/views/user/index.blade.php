@@ -34,7 +34,7 @@
 
 <body>
     <input type="hidden" id="APP_URL" value="<% $APP_URL %>">
-    
+
   <div id="loader-wrapper">
       <div id="loader"></div>        
       <div class="loader-section section-left"></div>
@@ -112,7 +112,7 @@
   <div id="main">
     <div class="wrapper">
 
-      <aside id="left-sidebar-nav">
+      <aside id="left-sidebar-nav" ng-controller="LeftNavbarCtrl">
         <ul id="slide-out" class="side-nav fixed leftside-navigation">
             <li class="user-details cyan darken-2">
             <div class="row">
@@ -121,8 +121,6 @@
                 </div>
                 <div class="col col s8 m8 l8">
                     <ul id="profile-dropdown" class="dropdown-content">
-                        <li><a href="#"><i class="mdi-action-face-unlock"></i> Profile</a>
-                        </li>
                         <li><a href="#"><i class="mdi-action-settings"></i> Settings</a>
                         </li>
                         <li><a href="#"><i class="mdi-communication-live-help"></i> Help</a>
@@ -133,8 +131,10 @@
                         <li><a href="#"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
                         </li>
                     </ul>
-                    <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">John Doe<i class="mdi-navigation-arrow-drop-down right"></i></a>
-                    <p class="user-roal">Administrator</p>
+                    <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">
+                        {{ user.name }}<i class="mdi-navigation-arrow-drop-down right"></i>
+                    </a>
+                    <p class="user-roal">Meu Perfil</p>
                 </div>
             </div>
             </li>
@@ -143,18 +143,12 @@
             <li class="no-padding">
                 <ul class="collapsible collapsible-accordion">
                     
-                    <li class="bold">
-                        <a class="collapsible-header  waves-effect waves-cyan">
-                            <i class="mdi-image-image"></i> Dispositivos
+                    <li class="li-hover"><div class="divider"></div></li>
+                    
+                    <li ng-repeat="device in devices" class="bold">
+                        <a ui-sref="device_detail({id: {{device.id}} })" class="waves-effect waves-cyan">
+                            <i class="mdi-action-favorite"></i> {{ device.nickname }} <span class="new badge">4</span>
                         </a>
-                        <div class="collapsible-body">
-                            <ul>                                        
-                                <li><a href="media-gallary-page.html">Novo</a>
-                                </li>
-                                <li><a href="media-hover-effects.html">Lista</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
                     
                 </ul>
@@ -162,7 +156,8 @@
             
         </ul>
         <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i class="mdi-navigation-menu"></i></a>
-        </aside>
+      </aside>
+      
       <section id="content">
         
         <div id="breadcrumbs-wrapper">
@@ -188,7 +183,7 @@
           <div class="section" ui-view="MainContent"></div>
             <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
                 <a class="btn-floating btn-large">
-                  <i class="mdi-action-stars"></i>
+                  <i class="mdi-content-add"></i>
                 </a>
                 <ul>
                   <li><a href="css-helpers.html" class="btn-floating red"><i class="large mdi-communication-live-help"></i></a></li>
@@ -346,6 +341,7 @@
     <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/chartist-js/chartist.min.js"></script>   
     <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins.min.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/js/custom-script.js"></script>
+    <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/underscore/underscore-min.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     

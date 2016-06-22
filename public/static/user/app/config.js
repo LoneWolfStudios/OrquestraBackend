@@ -11,6 +11,15 @@ OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
                         templateUrl: view('dashboard')
                     }
                 }
+            })
+            
+            .state('device_detail', {
+                url: '/device/{id}',
+                views: {
+                    MainContent: {
+                        templateUrl: view('device/detail')
+                    }
+                }
             });
         
     }

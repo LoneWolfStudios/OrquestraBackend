@@ -19,6 +19,7 @@ class CreateDevicesTable extends Migration
             
             $table->string('nickname')->nullable(false);
             
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

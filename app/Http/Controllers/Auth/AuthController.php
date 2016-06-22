@@ -5,6 +5,7 @@ namespace Orquestra\Http\Controllers\Auth;
 use Orquestra\User;
 use Validator;
 use Orquestra\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -37,7 +38,6 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
     /**
@@ -69,4 +69,12 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+    
+    public function getLogout() 
+    {
+        Auth::logout();
+    
+        return redirect()->to('auth/login');
+    }
+    
 }

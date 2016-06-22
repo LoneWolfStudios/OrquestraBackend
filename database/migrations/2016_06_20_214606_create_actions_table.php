@@ -17,6 +17,7 @@ class CreateActionsTable extends Migration
             
             $table->unsignedInteger('constraint_id')->nullable(false);
             
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
