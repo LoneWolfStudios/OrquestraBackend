@@ -1,6 +1,6 @@
 var OrquestraUser = angular.module('OrquestraUser', ['ui.router']);
 
-var APP_URL = $("#APP_URL");
+var APP_URL = $("#APP_URL").val();
 
 function view(path) {
     return APP_URL + "/user/" + path;
@@ -18,10 +18,10 @@ OrquestraUser.controller('DashboardIndexCtrl', ['$scope',
     }
 ]);
 
-OrquetraUser.config(['$stateProvider', '$urlRouteProvider',
-    function ($stateProvider, $urlRouteProvider) {
+OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
+    function ($stateProvider, $urlRouterProvider) {
         
-        $urlRouteProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/');
         
         $stateProvider
             .state('home', {

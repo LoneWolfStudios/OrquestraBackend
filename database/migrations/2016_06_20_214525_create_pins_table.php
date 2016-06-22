@@ -14,6 +14,11 @@ class CreatePinsTable extends Migration
     {
         Schema::create('pins', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->unsignedInteger('device_id')->nullable(false);
+
+            $table->string('name')->nullable(false);
+            
             $table->timestamps();
         });
     }

@@ -14,6 +14,11 @@ class CreateDevicesTable extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->unsignedInteger('user_id')->nullable(false);
+            
+            $table->string('nickname')->nullable(false);
+            
             $table->timestamps();
         });
     }

@@ -14,6 +14,9 @@ class CreateActionsTable extends Migration
     {
         Schema::create('actions', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->unsignedInteger('constraint_id')->nullable(false);
+            
             $table->timestamps();
         });
     }

@@ -1,7 +1,7 @@
-OrquetraUser.config(['$stateProvider', '$urlRouteProvider',
-    function ($stateProvider, $urlRouteProvider) {
+OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
+    function ($stateProvider, $urlRouterProvider) {
         
-        $urlRouteProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/');
         
         $stateProvider
             .state('home', {

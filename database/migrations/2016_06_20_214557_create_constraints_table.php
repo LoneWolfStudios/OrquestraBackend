@@ -14,6 +14,9 @@ class CreateConstraintsTable extends Migration
     {
         Schema::create('constraints', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->unsignedInteger('device_id')->nullable(false);
+            
             $table->timestamps();
         });
     }

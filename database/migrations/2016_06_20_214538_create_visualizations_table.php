@@ -14,6 +14,9 @@ class CreateVisualizationsTable extends Migration
     {
         Schema::create('visualizations', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->unsignedInteger('device_id')->nullable(false);
+            
             $table->timestamps();
         });
     }
