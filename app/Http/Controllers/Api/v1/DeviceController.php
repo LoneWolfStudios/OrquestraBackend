@@ -3,6 +3,8 @@
 namespace Orquestra\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
+use Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 use Orquestra\Device;
 use Orquestra\Http\Requests;
@@ -25,7 +27,24 @@ class DeviceController extends ApiController
     
     public function create(Request $request) 
     {
-        return Device::create($request->all());
+        $device = Device::create($request->all());
+        
+        // TODO: Serviço para prover id's únicas
+        $device->unique_id = str_random(25);
+        
+        Schema::create($device->unique_id . '_pindata', function (Blueprint $table) {
+            $table->increments('id');
+            
+            $table->unsignedInteger('pin_id')->nullable(false);
+            $table->double('value', 15, 8);
+            
+            $table->boolean('active')->default(true);
+            $table->timestamps();
+        });
+        
+        $device->save();
+        
+        return $device;
     }
     
 }

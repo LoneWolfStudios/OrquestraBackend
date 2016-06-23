@@ -14,6 +14,8 @@ OrquestraUser.controller('DeviceCreateCtrl', ['$scope', '$state', 'Breadcumb', '
         $scope.create = function () {
             if (! clicked) {
                 
+                clicked = true;
+                
                 CurrentUser.get().then(function (user) {
                     $scope.device.user_id = user.id;
                     
@@ -22,6 +24,7 @@ OrquestraUser.controller('DeviceCreateCtrl', ['$scope', '$state', 'Breadcumb', '
                             $state.go('home');
                         },
                         function onError(res) {
+                            clicked = false;
                             alert('Houve um erro na criação do dispositivo.');
                         }
                     );                    
