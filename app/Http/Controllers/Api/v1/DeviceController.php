@@ -2,11 +2,14 @@
 
 namespace Orquestra\Http\Controllers\Api\v1;
 
+use Event;
+
 use Illuminate\Http\Request;
-use Schema;
-use Illuminate\Database\Schema\Blueprint;
 
 use Orquestra\Device;
+
+use Orquestra\Events\User\DeviceWasCreated;
+
 use Orquestra\Http\Requests;
 use Orquestra\Http\Controllers\Api\ApiController;
 
@@ -29,20 +32,7 @@ class DeviceController extends ApiController
     {
         $device = Device::create($request->all());
         
-        // TODO: Serviço para prover id's únicas
-        $device->unique_id = str_random(25);
-        
-        Schema::create($device->unique_id . '_pindata', function (Blueprint $table) {
-            $table->increments('id');
-            
-            $table->unsignedInteger('pin_id')->nullable(false);
-            $table->double('value', 15, 8);
-            
-            $table->boolean('active')->default(true);
-            $table->timestamps();
-        });
-        
-        $device->save();
+        Event::fire(new DeviceWasCreated($device));
         
         return $device;
     }

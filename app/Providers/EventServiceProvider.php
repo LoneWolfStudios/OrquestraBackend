@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Orquestra\Events\SomeEvent' => [
-            'Orquestra\Listeners\EventListener',
+        'Orquestra\Events\User\DeviceWasCreated' => [
+            'Orquestra\Listeners\User\DeviceDataTableCreation',
         ],
     ];
 
