@@ -18,6 +18,29 @@ OrquestraUser.service('DeviceRepository', ['$http', '$q', 'Device',
             return deferred.promise;
         };
         
+        repository.save = function (device) {
+            var deferred = $q.defer();
+            
+            var data = {
+                nickname: device.nickname,
+                desc: device.desc,
+                user_id: device.user_id
+            };
+            
+            $http.post(api_v1("device/create"), data).then(
+                function (res) {
+                    device.id = res.data.id;
+                    
+                    deferred.resolve(device);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
         repository.byUser = function (id) {
             var deferred = $q.defer();
             

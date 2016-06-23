@@ -76,7 +76,7 @@ OrquestraUser.service('CurrentUser', ['$http', '$q', 'User',
             if ( ! _user) {
                 $http.get(api_v1("user")).then(
                     function (res) {
-                        var user = new User(res.data.id);
+                        var user = new User();
                         
                         _.extend(user, res.data);
                         
@@ -108,6 +108,29 @@ OrquestraUser.service('DeviceRepository', ['$http', '$q', 'Device',
                     attr(device, res.data);
                     
                     deferred.resolve(device);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.save = function (device) {
+            var deferred = $q.defer();
+            
+            var data = {
+                nickname: device.nickname,
+                desc: device.desc,
+                user_id: device.user_id
+            };
+            
+            $http.post(api_v1("device/create"), data).then(
+                function (res) {
+                    device.id = res.data.id;
+                    
+                    deferred.resolve(device);
+                },
+                function (res) {
+                    deferred.reject(res);
                 }
             );
             
@@ -178,6 +201,40 @@ OrquestraUser.controller('DashboardIndexCtrl', ['$scope', 'Breadcumb',
         Breadcumb.items = [{ text: 'Dashboard' }];
         
         $scope.test = "User Dashboard Index";
+    }
+]);
+
+OrquestraUser.controller('DeviceCreateCtrl', ['$scope', '$state', 'Breadcumb', 'CurrentUser', 'Device', 'DeviceRepository',
+    function ($scope, $state, Breadcumb, CurrentUser, Device, DeviceRepository) {
+        Breadcumb.items = [
+            { url: 'home', text: 'Dashboard' },
+            { text: 'Novo Dispositivo' }
+        ];
+        
+        Breadcumb.title = "Novo Dispositivo";
+        
+        $scope.device = new Device();
+        
+        var clicked = false;
+        
+        $scope.create = function () {
+            if (! clicked) {
+                
+                CurrentUser.get().then(function (user) {
+                    $scope.device.user_id = user.id;
+                    
+                    DeviceRepository.save($scope.device).then(
+                        function onSuccess(device) {
+                            $state.go('home');
+                        },
+                        function onError(res) {
+                            alert('Houve um erro na criação do dispositivo.');
+                        }
+                    );                    
+                });
+
+            }
+        };
     }
 ]);
 

@@ -23,4 +23,9 @@ class DeviceController extends ApiController
                      ->get();
     }
     
+    public function create(Request $request) 
+    {
+        return Device::create($request->all());
+    }
+    
 }

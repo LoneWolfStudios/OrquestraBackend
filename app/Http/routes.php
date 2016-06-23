@@ -42,6 +42,7 @@ Route::group([
         
             Route::get('/{id}', 'DeviceController@find');    
             Route::get('byUser/{id}', 'DeviceController@byUser');
+            Route::post('/create', 'DeviceController@create');
             
         });
 

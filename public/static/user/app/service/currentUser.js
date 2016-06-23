@@ -10,7 +10,7 @@ OrquestraUser.service('CurrentUser', ['$http', '$q', 'User',
             if ( ! _user) {
                 $http.get(api_v1("user")).then(
                     function (res) {
-                        var user = new User(res.data.id);
+                        var user = new User();
                         
                         _.extend(user, res.data);
                         
