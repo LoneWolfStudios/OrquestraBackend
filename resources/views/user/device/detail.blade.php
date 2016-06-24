@@ -8,7 +8,7 @@
           <i class="mdi-action-label circle light-blue"></i>
           <span class="collection-header">Pinos</span>
           <p>Pinos configurados para este dispositivo</p>
-          <a title="Novo Pino" class="secondary-content"><i class="mdi-content-add small"></i></a>
+          <a href="" ng-click="createPin()" title="Novo Pino" class="secondary-content"><i class="mdi-content-add small"></i></a>
         </li>
         <li class="collection-item" ng-repeat="pin in pins">
           <div class="row">
@@ -33,6 +33,10 @@
           </div>
         </li>
 
+        <li class="collection-item" ng-if="pins.length == 0">
+            <span>Este dispositivo não possui pinos.</span>
+        </li>
+        
       </ul>
     </div>
     

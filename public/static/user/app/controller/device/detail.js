@@ -1,11 +1,17 @@
 OrquestraUser.controller('DeviceDetailCtrl', [
-    '$scope', '$stateParams', 'Breadcumb', 'DeviceRepository', 'PinRepository',
-    function ($scope, $stateParams, Breadcumb, DeviceRepository, PinRepository) {
+    '$scope', '$state', '$stateParams', 'Breadcumb', 'DeviceRepository', 'PinRepository',
+    function ($scope, $state, $stateParams, Breadcumb, DeviceRepository, PinRepository) {
         
         Breadcumb.items = [
             { url: 'home', text: 'Dashboard' },
             { text: 'Dispositivo' }
         ];
+        
+        $scope.createPin = function () {
+            $state.go('pin_create', {
+                deviceId: $stateParams.deviceId
+            });
+        };
         
         DeviceRepository.find($stateParams.deviceId).then(
             function (device) {

@@ -13,6 +13,15 @@ OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
                 }
             })
             
+            .state('pin_create', {
+                url: '/{deviceId}/pin/create',
+                views: {
+                    MainContent: {
+                        templateUrl: view('pin/create')
+                    }
+                }
+            })
+            
             .state('device_create', {
                 url: '/device/create',
                 views: {

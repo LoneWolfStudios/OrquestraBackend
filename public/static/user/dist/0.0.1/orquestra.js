@@ -220,6 +220,8 @@ OrquestraUser.controller('DeviceCreateCtrl', ['$scope', '$state', 'Breadcumb', '
         $scope.create = function () {
             if (! clicked) {
                 
+                clicked = true;
+                
                 CurrentUser.get().then(function (user) {
                     $scope.device.user_id = user.id;
                     
@@ -228,6 +230,7 @@ OrquestraUser.controller('DeviceCreateCtrl', ['$scope', '$state', 'Breadcumb', '
                             $state.go('home');
                         },
                         function onError(res) {
+                            clicked = false;
                             alert('Houve um erro na criação do dispositivo.');
                         }
                     );                    
@@ -239,13 +242,19 @@ OrquestraUser.controller('DeviceCreateCtrl', ['$scope', '$state', 'Breadcumb', '
 ]);
 
 OrquestraUser.controller('DeviceDetailCtrl', [
-    '$scope', '$stateParams', 'Breadcumb', 'DeviceRepository', 'PinRepository',
-    function ($scope, $stateParams, Breadcumb, DeviceRepository, PinRepository) {
+    '$scope', '$state', '$stateParams', 'Breadcumb', 'DeviceRepository', 'PinRepository',
+    function ($scope, $state, $stateParams, Breadcumb, DeviceRepository, PinRepository) {
         
         Breadcumb.items = [
             { url: 'home', text: 'Dashboard' },
             { text: 'Dispositivo' }
         ];
+        
+        $scope.createPin = function () {
+            $state.go('pin_create', {
+                deviceId: $stateParams.deviceId
+            });
+        };
         
         DeviceRepository.find($stateParams.deviceId).then(
             function (device) {
@@ -260,12 +269,6 @@ OrquestraUser.controller('DeviceDetailCtrl', [
                 );
             }
         );
-        
-    }
-]);
-
-OrquestraUser.controller('FixedButtonCtrl', ['$scope',
-    function ($scope) {
         
     }
 ]);
@@ -288,6 +291,18 @@ OrquestraUser.controller('LeftNavbarCtrl', ['$scope', 'CurrentUser',
     }
 ]);
 
+OrquestraUser.controller('PinCreateCtrl', ['$scope', '$stateParams', 'Breadcumb',
+    function ($scope, $stateParams, Breadcumb) {
+        Breadcumb.title = "Novo Pino";
+        
+        Breadcumb.items = [
+            {url: 'home', text: 'Dashboard'},
+            {url: 'device_detail({deviceId: ' + $stateParams.deviceId + '})', text: 'Dispositivo'},
+            {text: 'Novo Pino'}
+        ];
+    }
+]);
+
 OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
         
@@ -299,6 +314,15 @@ OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
                 views: {
                     MainContent: {
                         templateUrl: view('dashboard')
+                    }
+                }
+            })
+            
+            .state('pin_create', {
+                url: '/{deviceId}/pin/create',
+                views: {
+                    MainContent: {
+                        templateUrl: view('pin/create')
                     }
                 }
             })
