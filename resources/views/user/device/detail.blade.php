@@ -1,5 +1,8 @@
 <div id="work-collections" class="seaction" ng-controller="DeviceDetailCtrl">
   
+  <p class="caption">{{ device.desc }}</p>
+  <div class="divider"></div>
+    
   <div class="row">
     
     <div class="col s12 m12 l6">
@@ -20,7 +23,7 @@
               <small class="col s12">Gráfico Tempo Real</small>
             </div>
             <div class="col s4 right-align">
-              <a class="btn-floating waves-effect waves-light green" title="Visualizar">
+              <a ui-sref="pin_detail({pinId: pin.id, deviceId: device.id})" class="btn-floating waves-effect waves-light green" title="Visualizar">
                 <i class="mdi-action-search"></i>
               </a>
               <a class="btn-floating waves-effect waves-light orange" title="Editar">

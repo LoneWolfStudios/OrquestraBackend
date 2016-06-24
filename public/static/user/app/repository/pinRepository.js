@@ -2,6 +2,45 @@ OrquestraUser.service('PinRepository', ['$q', '$http', 'Pin',
     function ($q, $http, Pin) {
         var repository = {};
         
+        repository.find = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1('pin/' + id)).then(
+                function (res) {
+                    var pin = new Pin();
+                    
+                    attr(pin, res.data);
+                    
+                    deferred.resolve(pin);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.save = function (pin) {
+            var deferred = $q.defer();
+            
+            var data = {
+                name: pin.name,
+                desc: pin.desc,
+                device_id: pin.device_id
+            };
+            
+            $http.post(api_v1("pin/create"), data).then(
+                function (res) {
+                    pin.id = res.data.id;
+                    
+                    deferred.resolve(pin);
+                },
+                function (res) {
+                    deferred.reject(pin);
+                }
+            );
+    
+            return deferred.promise;
+        };
+        
         repository.byDevice = function (id) {
             var deferred = $q.defer();
             

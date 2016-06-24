@@ -16,4 +16,14 @@ class PinController extends Controller
                   ->where('active', true)
                   ->get();
     }
+    
+    public function create(Request $request) 
+    {
+        return Pin::create($request->all());
+    }
+    
+    public function find($id) 
+    {
+        return Pin::find($id);
+    }
 }

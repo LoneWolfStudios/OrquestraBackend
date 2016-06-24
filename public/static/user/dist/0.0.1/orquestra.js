@@ -165,6 +165,45 @@ OrquestraUser.service('PinRepository', ['$q', '$http', 'Pin',
     function ($q, $http, Pin) {
         var repository = {};
         
+        repository.find = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1('pin/' + id)).then(
+                function (res) {
+                    var pin = new Pin();
+                    
+                    attr(pin, res.data);
+                    
+                    deferred.resolve(pin);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.save = function (pin) {
+            var deferred = $q.defer();
+            
+            var data = {
+                name: pin.name,
+                desc: pin.desc,
+                device_id: pin.device_id
+            };
+            
+            $http.post(api_v1("pin/create"), data).then(
+                function (res) {
+                    pin.id = res.data.id;
+                    
+                    deferred.resolve(pin);
+                },
+                function (res) {
+                    deferred.reject(pin);
+                }
+            );
+    
+            return deferred.promise;
+        };
+        
         repository.byDevice = function (id) {
             var deferred = $q.defer();
             
@@ -291,8 +330,8 @@ OrquestraUser.controller('LeftNavbarCtrl', ['$scope', 'CurrentUser',
     }
 ]);
 
-OrquestraUser.controller('PinCreateCtrl', ['$scope', '$stateParams', 'Breadcumb',
-    function ($scope, $stateParams, Breadcumb) {
+OrquestraUser.controller('PinCreateCtrl', ['$scope', '$state', '$stateParams', 'Breadcumb',  'Pin', 'PinRepository',
+    function ($scope, $state, $stateParams, Breadcumb, Pin, PinRepository) {
         Breadcumb.title = "Novo Pino";
         
         Breadcumb.items = [
@@ -300,8 +339,48 @@ OrquestraUser.controller('PinCreateCtrl', ['$scope', '$stateParams', 'Breadcumb'
             {url: 'device_detail({deviceId: ' + $stateParams.deviceId + '})', text: 'Dispositivo'},
             {text: 'Novo Pino'}
         ];
+        
+        $scope.pin = new Pin();
+        
+        $scope.pin.device_id = $stateParams.deviceId;
+        
+        var clicked = false;
+        
+        $scope.create = function () {
+            if (! clicked) {
+                PinRepository.save($scope.pin).then(
+                   function onSuccess(pin) {
+                       $state.go('device_detail', {
+                           deviceId: pin.device_id
+                       });
+                   },
+                   function onError(res) {
+                       alert("Houve um erro na criação do pino.");
+                   }
+                );
+            }
+        };
     }
 ]);
+
+OrquestraUser.controller('PinDetailCtrl', ['$scope', '$stateParams', 'Breadcumb', 'PinRepository',
+    function ($scope, $stateParams, Breadcumb, PinRepository) {
+        Breadcumb.items = [
+            { url: 'home', text: 'Dashboard' },
+            { url: 'device_detail({ deviceId: ' + $stateParams.deviceId + '})', text: 'Dispositivo' },
+            { text: 'Pino' }
+        ];
+        
+        PinRepository.find($stateParams.pinId).then(
+            function (pin) {
+                $scope.pin = pin;
+                
+                Breadcumb.title = pin.name;
+            }
+        );
+    }
+]);
+
 
 OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
@@ -323,6 +402,15 @@ OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
                 views: {
                     MainContent: {
                         templateUrl: view('pin/create')
+                    }
+                }
+            })
+            
+            .state('pin_detail', {
+                url: '/device/{deviceId}/pin/{pinId}',
+                views: {
+                    MainContent: {
+                        templateUrl: view('pin/detail')
                     }
                 }
             })

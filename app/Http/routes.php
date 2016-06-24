@@ -50,8 +50,18 @@ Route::group([
             'prefix' => 'pin'
         ], function () {
         
+            Route::get('/{id}', 'PinController@find');
             Route::get('/byDevice/{id}', 'PinController@byDevice');
+            Route::post('/create', 'PinController@create');
+            
+        });
         
+        Route::group([
+            'prefix' => 'data'
+        ], function () {
+            
+            Route::get('/send', 'DataController@send');
+            
         });
         
         Route::group([
@@ -121,6 +131,7 @@ Route::group([
         'prefix' => 'pin'
     ], function () {
         
+        Route::get('/detail', 'ViewController@getDetail');
         Route::get('/create', 'ViewController@getCreate');
         
     });

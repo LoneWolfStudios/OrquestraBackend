@@ -13,4 +13,9 @@ class ViewController extends Controller
     {
         return view('user.pin.create');
     }
+    
+    public function getDetail() 
+    {
+        return view('user.pin.detail');
+    }
 }

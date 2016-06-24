@@ -7,8 +7,8 @@
                     <form class="col s12">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="name" type="text" ng-model="pin.nickname">
-                                <label for="first_name" class="">Apelido</label>
+                                <input id="name" type="text" ng-model="pin.name">
+                                <label for="first_name" class="">ID</label>
                             </div>
                         </div>
                         <div class="row">
