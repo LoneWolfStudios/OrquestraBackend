@@ -21,11 +21,7 @@ OrquestraUser.service('DeviceRepository', ['$http', '$q', 'Device',
         repository.save = function (device) {
             var deferred = $q.defer();
             
-            var data = {
-                nickname: device.nickname,
-                desc: device.desc,
-                user_id: device.user_id
-            };
+            var data = JSON.stringify(device);
             
             $http.post(api_v1("device/create"), data).then(
                 function (res) {

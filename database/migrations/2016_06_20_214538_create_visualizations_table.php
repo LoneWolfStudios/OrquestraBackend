@@ -17,8 +17,18 @@ class CreateVisualizationsTable extends Migration
             
             $table->unsignedInteger('device_id')->nullable(false);
             
+            $table->unsignedInteger('x_id')->nullable(false);
+            $table->unsignedInteger('y_id')->nullable(true);
+            $table->unsignedInteger('z_id')->nullable(true);
+            
+            $table->string('x_label')->default('x');
+            $table->string('y_label')->default('y');
+            $table->string('z_label')->default('z');
+            
             $table->string('name')->nullable(false);
             $table->string('desc')->nullable(true);
+            
+            $table->string('formula')->nullable(false);
             
             $table->boolean('active')->default(true);
             $table->timestamps();

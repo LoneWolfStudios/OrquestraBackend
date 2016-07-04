@@ -21,11 +21,7 @@ OrquestraUser.service('PinRepository', ['$q', '$http', 'Pin',
         repository.save = function (pin) {
             var deferred = $q.defer();
             
-            var data = {
-                name: pin.name,
-                desc: pin.desc,
-                device_id: pin.device_id
-            };
+            var data = JSON.stringify(pin);
             
             $http.post(api_v1("pin/create"), data).then(
                 function (res) {

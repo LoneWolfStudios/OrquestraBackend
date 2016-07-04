@@ -60,7 +60,7 @@ Route::group([
             'prefix' => 'data'
         ], function () {
             
-            Route::get('/send', 'DataController@send');
+            Route::post('/send', 'DataController@send');
             
         });
         
@@ -80,6 +80,11 @@ Route::group([
         Route::group([
             'prefix' => 'visualization'
         ], function () {
+            
+            Route::get('/{id}', 'VisualizationController@find');
+            Route::get('/byDevice/{id}', 'VisualizationController@byDevice');
+            Route::post('/create', 'VisualizationController@create');
+            
         });
         
     });
@@ -129,6 +134,16 @@ Route::group([
     Route::group([
         'namespace' => 'Pin',
         'prefix' => 'pin'
+    ], function () {
+        
+        Route::get('/detail', 'ViewController@getDetail');
+        Route::get('/create', 'ViewController@getCreate');
+        
+    });
+    
+    Route::group([
+        'namespace' => 'Visualization',
+        'prefix' => 'visualization'
     ], function () {
         
         Route::get('/detail', 'ViewController@getDetail');

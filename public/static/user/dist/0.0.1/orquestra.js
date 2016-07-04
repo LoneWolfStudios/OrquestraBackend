@@ -54,6 +54,14 @@ OrquestraUser.factory('User', ['DeviceRepository',
     }
 ]);
 
+OrquestraUser.factory('Visualization', [
+    function () {
+        var Visualization = new Function();
+        
+        return Visualization;
+    }    
+]);
+
 OrquestraUser.service('Breadcumb', [
     function () {
         var service = this;
@@ -117,11 +125,7 @@ OrquestraUser.service('DeviceRepository', ['$http', '$q', 'Device',
         repository.save = function (device) {
             var deferred = $q.defer();
             
-            var data = {
-                nickname: device.nickname,
-                desc: device.desc,
-                user_id: device.user_id
-            };
+            var data = JSON.stringify(device);
             
             $http.post(api_v1("device/create"), data).then(
                 function (res) {
@@ -184,11 +188,7 @@ OrquestraUser.service('PinRepository', ['$q', '$http', 'Pin',
         repository.save = function (pin) {
             var deferred = $q.defer();
             
-            var data = {
-                name: pin.name,
-                desc: pin.desc,
-                device_id: pin.device_id
-            };
+            var data = JSON.stringify(pin);
             
             $http.post(api_v1("pin/create"), data).then(
                 function (res) {
@@ -218,6 +218,69 @@ OrquestraUser.service('PinRepository', ['$q', '$http', 'Pin',
                     });
                     
                     deferred.resolve(pins);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        return repository;
+    }
+]);
+
+OrquestraUser.service('VisualizationRepository', ['$http', '$q', 'Visualization',
+    function ($http, $q, Visualization) {
+        var repository = {};
+        
+        repository.find = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("visualization/" + id)).then(
+                function (res) {
+                    var visualization = new Visualization();
+                        
+                    attr(visualization, res.data);
+                    
+                    deferred.resolve(visualization);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.save = function (visualization) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(visualization);
+            
+            $http.post(api_v1("visualization/create"), data).then(
+                function (res) {
+                    visualization.id = res.data.id;
+                    
+                    deferred.resolve(visualization);
+                },
+                function (res) {
+                    deferred.reject(res);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.byDevice = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("visualization/byDevice/" + id)).then(
+                function (res) {
+                    var visualizations = _.map(res.data, function (json) {
+                        var visualization = new Visualization();
+                        
+                        attr(visualization, json);
+                        
+                        return visualization;
+                    });
+                    
+                    deferred.resolve(visualizations);
                 }
             );
             
@@ -281,31 +344,38 @@ OrquestraUser.controller('DeviceCreateCtrl', ['$scope', '$state', 'Breadcumb', '
 ]);
 
 OrquestraUser.controller('DeviceDetailCtrl', [
-    '$scope', '$state', '$stateParams', 'Breadcumb', 'DeviceRepository', 'PinRepository',
-    function ($scope, $state, $stateParams, Breadcumb, DeviceRepository, PinRepository) {
+    '$scope', '$state', '$stateParams', 'Breadcumb', 'DeviceRepository', 'PinRepository', 'VisualizationRepository',
+    function ($scope, $state, $stateParams, Breadcumb, DeviceRepository, PinRepository, VisualizationRepository) {
         
         Breadcumb.items = [
             { url: 'home', text: 'Dashboard' },
             { text: 'Dispositivo' }
         ];
         
-        $scope.createPin = function () {
-            $state.go('pin_create', {
-                deviceId: $stateParams.deviceId
-            });
-        };
-        
         DeviceRepository.find($stateParams.deviceId).then(
-            function (device) {
+            function onSuccess (device) {
                 $scope.device = device;
                 
                 Breadcumb.title = device.nickname;
                 
                 PinRepository.byDevice(device.id).then(
-                    function (pins) {
+                    function onSuccess (pins) {
                         $scope.pins = pins;
+                    },
+                    function onError (res) {
+                        alert("Houve um erro na obtenção da lista de pinos");
                     }
                 );
+        
+                VisualizationRepository.byDevice(device.id).then(
+                    function onSuccess (visualizations) {
+                        $scope.visualizations = visualizations;
+                    },
+                    function onError (res) {
+                        alert("Houve um erro na obtenção da lista de pinos");
+                    }
+                );
+        
             }
         );
         
@@ -382,6 +452,58 @@ OrquestraUser.controller('PinDetailCtrl', ['$scope', '$stateParams', 'Breadcumb'
 ]);
 
 
+OrquestraUser.controller('VisualizationCreateCtrl', ['$scope', '$state', '$stateParams', 'Breadcumb',  'Visualization', 'VisualizationRepository', 'PinRepository',
+    function ($scope, $state, $stateParams, Breadcumb, Visualization, VisualizationRepository, PinRepository) {
+        Breadcumb.title = "Novo Pino";
+        
+        Breadcumb.items = [
+            {url: 'home', text: 'Dashboard'},
+            {url: 'device_detail({deviceId: ' + $stateParams.deviceId + '})', text: 'Dispositivo'},
+            {text: 'Nova Visualização'}
+        ];
+        
+        $scope.visualization = new Visualization();
+        
+        $scope.visualization.device_id = $stateParams.deviceId;
+        
+        var clicked = false;
+        
+        $scope.create = function () {
+            if (! clicked) {
+                clicked = true;
+                
+                if ($scope.visualization.x_id) {
+                    VisualizationRepository.save($scope.visualization).then(
+                       function onSuccess(pin) {
+                           $state.go('device_detail', {
+                               deviceId: pin.device_id
+                           });
+                       },
+                       function onError(res) {
+                           alert("Houve um erro na criação do pino.");
+
+                           clicked = false;
+                       }
+                    );    
+                } else {
+                    alert("Você deve escolher ao menos um pino. Sempre do x ao z.");
+                    
+                    clicked = false;
+                }
+            }
+        };
+        
+        PinRepository.byDevice($stateParams.deviceId).then(
+            function onSuccess (pins) {
+                $scope.pins = pins;
+            },
+            function onError (res) {
+                alert("Houve um erro na obtenção dos pinos deste dispositivo");
+            }
+        );
+    }
+]);
+
 OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
         
@@ -393,6 +515,15 @@ OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
                 views: {
                     MainContent: {
                         templateUrl: view('dashboard')
+                    }
+                }
+            })
+            
+            .state('visualization_create', {
+                url: '/{deviceId}/visualization/create',
+                views: {
+                    MainContent: {
+                        templateUrl: view('visualization/create')
                     }
                 }
             })
