@@ -3,10 +3,12 @@
 namespace Orquestra\Listeners\User;
 
 use DB;
+use Event;
 
 use Orquestra\Visualization;
 
 use Orquestra\Events\User\PinDataWasInserted;
+use Orquestra\Events\User\VisualizationWasProcessed;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -41,6 +43,7 @@ class VisualizationProcessing
             $x = null; 
             $y = null; 
             $z = null;
+            $id = null;
             
             foreach ($event->request->data as $pin) 
             {
@@ -62,7 +65,7 @@ class VisualizationProcessing
             
             if (is_null($visualization->y_id) && is_null($visualization->z_id) && !is_null($x)) 
             {
-                DB::table('visualization_data_' . $event->device->id)->insert(
+                $id = DB::table('visualization_data_' . $event->device->id)->insertGetId(
                     [
                         "visualization_id" => $visualization->id,
                         "device_id" => $event->device->id,
@@ -78,7 +81,7 @@ class VisualizationProcessing
             
             if (is_null($visualization->z_id) && !is_null($x) && !is_null($y)) 
             {
-                DB::table('visualization_data_' . $event->device->id)->insert(
+                $id = DB::table('visualization_data_' . $event->device->id)->insert(
                     [
                         "visualization_id" => $visualization->id,
                         "device_id" => $event->device->id,
@@ -95,7 +98,7 @@ class VisualizationProcessing
             
             if (!is_null($x) && !is_null($y) && !is_null($z)) 
             {
-                DB::table('visualization_data_' . $event->device->id)->insert(
+                $id = DB::table('visualization_data_' . $event->device->id)->insert(
                     [
                         "visualization_id" => $visualization->id,
                         "device_id" => $event->device->id,
@@ -110,6 +113,14 @@ class VisualizationProcessing
                     ]
                 );
             }
+            
+            if (!is_null($id)) 
+            {
+                $data = DB::table('visualization_data_' . $event->device->id)->find($id);
+                
+                Event::fire(new VisualizationWasProcessed($visualization, $data));
+            }
+            
         }
     }
 }

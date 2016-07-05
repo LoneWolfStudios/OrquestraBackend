@@ -47,7 +47,12 @@
                     <div class="nav-wrapper">
                         <ul class="left">
                             <li>
-                                <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><img src="<% $STATIC_URL %>/images/materialize-logo.png" alt="materialize logo"></a> <span class="logo-text">Materialize</span></h1></li>
+                                <h1 class="logo-wrapper">
+                                    <a href="#/" class="brand-logo darken-1">
+                                    <img src="<% $STATIC_URL %>/images/materialize-logo.png" alt="Orquestra" ></a> 
+                                    <span class="logo-text">Materialize</span>
+                                </h1>
+                            </li>
                             </ul>
                             <div class="header-search-wrapper hide-on-med-and-down">
                                 <i class="mdi-action-search"></i>

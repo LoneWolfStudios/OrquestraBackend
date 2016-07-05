@@ -20,6 +20,10 @@ class EventServiceProvider extends ServiceProvider
         
         'Orquestra\Events\User\PinDataWasInserted' => [
             'Orquestra\Listeners\User\VisualizationProcessing',
+        ],
+        
+        'Orquestra\Events\User\VisualizationWasProcessed' => [
+            'Orquestra\Listeners\User\ConstraintProcessing',
         ]
     ];
 
