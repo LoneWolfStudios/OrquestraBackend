@@ -1,6 +1,6 @@
 OrquestraUser.controller('DeviceDetailCtrl', [
-    '$scope', '$state', '$stateParams', 'Breadcumb', 'DeviceRepository', 'PinRepository', 'VisualizationRepository',
-    function ($scope, $state, $stateParams, Breadcumb, DeviceRepository, PinRepository, VisualizationRepository) {
+    '$scope', '$state', '$stateParams', 'Breadcumb', 'DeviceRepository', 'PinRepository', 'VisualizationRepository', 'ConstraintRepository',
+    function ($scope, $state, $stateParams, Breadcumb, DeviceRepository, PinRepository, VisualizationRepository, ConstraintRepository) {
         
         Breadcumb.items = [
             { url: 'home', text: 'Dashboard' },
@@ -27,7 +27,16 @@ OrquestraUser.controller('DeviceDetailCtrl', [
                         $scope.visualizations = visualizations;
                     },
                     function onError (res) {
-                        alert("Houve um erro na obtenção da lista de pinos");
+                        alert("Houve um erro na obtenção da lista de visualizações");
+                    }
+                );
+        
+                ConstraintRepository.byDevice(device.id).then(
+                    function onSuccess (constraints) {
+                        $scope.constraints = constraints;
+                    },
+                    function onError (res) {
+                        alert("Houve um erro na obtenção da lista de gatilhos");
                     }
                 );
         

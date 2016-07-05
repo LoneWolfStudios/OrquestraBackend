@@ -22,6 +22,15 @@ OrquestraUser.run([
     }
 ]);
 
+OrquestraUser.factory('Constraint', [
+    function () {
+        var Constraint = new Function();
+        
+        return Constraint;
+    }    
+]);
+
+
 OrquestraUser.factory('Device', ['PinRepository',
     function (PinRepository) {
         var Device = new Function();
@@ -120,6 +129,70 @@ OrquestraUser.service('CurrentUser', ['$http', '$q', 'User',
         };
     }
 ]);
+
+OrquestraUser.service('ConstraintRepository', ['$q', '$http', 'Constraint',
+    function ($q, $http, Constraint) {
+        var repository = {};
+        
+        repository.find = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1('constraint/find/' + id)).then(
+                function (res) {
+                    var constraint = new Constraint();
+                    
+                    attr(constraint, res.data);
+                    
+                    deferred.resolve(constraint);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.save = function (constraint) {
+            var deferred = $q.defer();
+            
+            var data = JSON.stringify(constraint);
+            
+            $http.post(api_v1("constraint/create"), data).then(
+                function (res) {
+                    constraint.id = res.data.id;
+                    
+                    deferred.resolve(constraint);
+                },
+                function (res) {
+                    deferred.reject(constraint);
+                }
+            );
+    
+            return deferred.promise;
+        };
+        
+        repository.byDevice = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("constraint/byDevice/" + id)).then(
+                function (res) {
+                    var constraints = _.map(res.data, function (json) {
+                        var constraint = new Constraint();
+                        
+                        attr(constraint, json);
+                        
+                        return constraint;
+                    });
+                    
+                    deferred.resolve(constraints);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        return repository;
+    }
+]);
+
 
 OrquestraUser.service('DeviceRepository', ['$http', '$q', 'Device',
     function ($http, $q, Device) {
@@ -365,6 +438,72 @@ OrquestraUser.controller('BreadcumbCtrl', ['$scope', 'Breadcumb',
     }
 ])
 
+OrquestraUser.controller('ConstraintCreateCtrl', ['$scope', '$state', '$stateParams', 'Breadcumb',  'Constraint', 'VisualizationRepository', 'ConstraintRepository',
+    function ($scope, $state, $stateParams, Breadcumb, Constraint, VisualizationRepository, ConstraintRepository) {
+        Breadcumb.title = "Novo Gatilho";
+        
+        Breadcumb.items = [
+            {url: 'home', text: 'Dashboard'},
+            {url: 'device_detail({deviceId: ' + $stateParams.deviceId + '})', text: 'Dispositivo'},
+            {text: 'Novo Gatilho'}
+        ];
+        
+        $scope.constraint = new Constraint();
+        
+        $scope.constraint.device_id = $stateParams.deviceId;
+        
+        var clicked = false;
+        
+        $scope.create = function () {
+            if (! clicked) {
+                ConstraintRepository.save($scope.constraint).then(
+                   function onSuccess(constraint) {
+                       $state.go('device_detail', {
+                           deviceId: constraint.device_id
+                       });
+                   },
+                   function onError(res) {
+                       alert("Houve um erro na criação do gatilho.");
+                   }
+                );
+            }
+        };
+        
+        VisualizationRepository.byDevice($stateParams.deviceId).then(
+            function onSuccess (list) {
+                $scope.visualizations = list;
+            },
+            function onError (res) {
+                alert("Houve um erro na obtenção da lista de visualizações");
+            }
+        );
+    }
+]);
+
+
+OrquestraUser.controller('ConstraintDetailCtrl', ['$scope', '$stateParams', 'Breadcumb', 'ConstraintRepository',
+    function ($scope, $stateParams, Breadcumb, ConstraintRepository) {
+        Breadcumb.items = [
+            { url: 'home', text: 'Dashboard' },
+            { url: 'device_detail({ deviceId: ' + $stateParams.deviceId + '})', text: 'Dispositivo' },
+            { text: 'Pino' }
+        ];
+        
+        ConstraintRepository.find($stateParams.constraintId).then(
+            function onSuccess (constraint) {
+                $scope.constraint = constraint;
+                
+                Breadcumb.title = constraint.name;
+            },
+            function onError () {
+                alert("Não foi possivel obter informações do gatilho");
+            }
+        );
+        
+    }
+]);
+
+
 OrquestraUser.controller('DashboardIndexCtrl', ['$scope', 'Breadcumb',
     function ($scope, Breadcumb) {
         Breadcumb.title = "Dashboard";
@@ -412,8 +551,8 @@ OrquestraUser.controller('DeviceCreateCtrl', ['$scope', '$state', 'Breadcumb', '
 ]);
 
 OrquestraUser.controller('DeviceDetailCtrl', [
-    '$scope', '$state', '$stateParams', 'Breadcumb', 'DeviceRepository', 'PinRepository', 'VisualizationRepository',
-    function ($scope, $state, $stateParams, Breadcumb, DeviceRepository, PinRepository, VisualizationRepository) {
+    '$scope', '$state', '$stateParams', 'Breadcumb', 'DeviceRepository', 'PinRepository', 'VisualizationRepository', 'ConstraintRepository',
+    function ($scope, $state, $stateParams, Breadcumb, DeviceRepository, PinRepository, VisualizationRepository, ConstraintRepository) {
         
         Breadcumb.items = [
             { url: 'home', text: 'Dashboard' },
@@ -440,7 +579,16 @@ OrquestraUser.controller('DeviceDetailCtrl', [
                         $scope.visualizations = visualizations;
                     },
                     function onError (res) {
-                        alert("Houve um erro na obtenção da lista de pinos");
+                        alert("Houve um erro na obtenção da lista de visualizações");
+                    }
+                );
+        
+                ConstraintRepository.byDevice(device.id).then(
+                    function onSuccess (constraints) {
+                        $scope.constraints = constraints;
+                    },
+                    function onError (res) {
+                        alert("Houve um erro na obtenção da lista de gatilhos");
                     }
                 );
         
@@ -684,6 +832,24 @@ OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
                 views: {
                     MainContent: {
                         templateUrl: view('dashboard')
+                    }
+                }
+            })
+            
+            .state('constraint_create', {
+                url: '/device/{deviceId}/constraint/create',
+                views: {
+                    MainContent: {
+                        templateUrl: view('constraint/create')
+                    }
+                }
+            })
+            
+            .state('constraint_detail', {
+                url: '/device/{deviceId}/constraint/{constraintId}',
+                views: {
+                    MainContent: {
+                        templateUrl: view('constraint/detail')
                     }
                 }
             })

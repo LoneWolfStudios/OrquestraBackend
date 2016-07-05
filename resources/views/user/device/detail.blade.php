@@ -17,7 +17,7 @@
           <div class="row">
             <div class="col s5">
               <p class="collections-title">{{ pin.name }}</p>
-              <p class="collections-content">{{ pin.desc | limitTo:30 }}</p>
+              <p class="collections-content">{{ pin.desc | limitTo:25 }}</p>
             </div>
             <div class="col s3">
               <small class="col s12">Gráfico Tempo Real</small>
@@ -56,7 +56,7 @@
           <div class="row">
             <div class="col s5">
               <p class="collections-title">{{ visualization.name }}</p>
-              <p class="collections-content">{{ visualization.desc | limitTo:30 }}</p>
+              <p class="collections-content">{{ visualization.desc | limitTo:25 }}</p>
             </div>
             <div class="col s3">
               <small class="col s12">Gráfico Tempo Real</small>
@@ -76,7 +76,7 @@
         </li>
        
         <li class="collection-item" ng-if="visualizations.length == 0">
-            <span>Este dispositivo não possui pinos.</span>
+            <span>Este dispositivo não possui visualizações.</span>
         </li>
         
    </ul>
@@ -90,25 +90,35 @@
           <i class="mdi-action-alarm red circle"></i>
           <span class="collection-header">Gatilhos</span>
           <p>Os gatilhos configuradas para este dispositivo</p>
-          <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+          <a ui-sref="constraint_create({deviceId: device.id})" class="secondary-content"><i class="mdi-content-add small"></i></a>
         </li>
         
-        <li class="collection-item">
+        <li class="collection-item" ng-repeat="constraint in constraints">
           <div class="row">
-            <div class="col s7">
-              <p class="collections-title"><strong>#102</strong> Home Page</p>
-              <p class="collections-content">Web Project</p>
-            </div>
-            <div class="col s2">
-              <span class="task-cat pink accent-2">P1</span>
+            <div class="col s5">
+              <p class="collections-title">{{ constraint.name }}</p>
+              <p class="collections-content">{{ constraint.desc | limitTo:25 }}</p>
             </div>
             <div class="col s3">
-              <div class="progress">
-               <div class="determinate" style="width: 70%"></div>   
-             </div>                                                
-           </div>
-         </div>
+              <small class="col s12">Gráfico Tempo Real</small>
+            </div>
+            <div class="col s4 right-align">
+              <a ui-sref="constraint_detail({constraintId: constraint.id, deviceId: device.id})" class="btn-floating waves-effect waves-light green" title="Detalhes">
+                <i class="mdi-action-search"></i>
+              </a>
+              <a class="btn-floating waves-effect waves-light orange" title="Editar">
+                <i class="mdi-editor-mode-edit"></i>
+              </a>
+              <a class="btn-floating waves-effect waves-light red" title="Deletar">
+                <i class="mdi-action-delete"></i>
+              </a>
+            </div>
+          </div>
        </li>
+       
+       <li class="collection-item" ng-if="constraints.length == 0">
+            <span>Este dispositivo não possui gatilhos.</span>
+        </li>
        
    </ul>
    </div>

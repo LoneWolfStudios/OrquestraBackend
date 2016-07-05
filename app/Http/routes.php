@@ -68,6 +68,11 @@ Route::group([
         Route::group([
             'prefix' => 'constraint'
         ], function () {
+            
+            Route::get('/find/{id}', 'ConstraintController@find');
+            Route::get('/byDevice/{id}', 'ConstraintController@byDevice');
+            Route::post('/create', 'ConstraintController@create');
+            
         });
         
         Route::group([
@@ -144,6 +149,16 @@ Route::group([
     Route::group([
         'namespace' => 'Pin',
         'prefix' => 'pin'
+    ], function () {
+        
+        Route::get('/detail', 'ViewController@getDetail');
+        Route::get('/create', 'ViewController@getCreate');
+        
+    });
+    
+    Route::group([
+        'namespace' => 'Constraint',
+        'prefix' => 'constraint'
     ], function () {
         
         Route::get('/detail', 'ViewController@getDetail');

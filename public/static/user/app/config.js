@@ -13,6 +13,24 @@ OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
                 }
             })
             
+            .state('constraint_create', {
+                url: '/device/{deviceId}/constraint/create',
+                views: {
+                    MainContent: {
+                        templateUrl: view('constraint/create')
+                    }
+                }
+            })
+            
+            .state('constraint_detail', {
+                url: '/device/{deviceId}/constraint/{constraintId}',
+                views: {
+                    MainContent: {
+                        templateUrl: view('constraint/detail')
+                    }
+                }
+            })
+            
             .state('visualization_create', {
                 url: '/device/{deviceId}/visualization/create',
                 views: {
