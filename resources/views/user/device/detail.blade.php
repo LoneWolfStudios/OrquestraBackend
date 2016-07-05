@@ -87,9 +87,9 @@
     <div class="col s12 m12 l6">
       <ul id="issues-collection" class="collection">
         <li class="collection-item avatar">
-          <i class="mdi-editor-insert-chart red circle"></i>
-          <span class="collection-header">Limites</span>
-          <p>Os limites configuradas para este dispositivo</p>
+          <i class="mdi-action-alarm red circle"></i>
+          <span class="collection-header">Gatilhos</span>
+          <p>Os gatilhos configuradas para este dispositivo</p>
           <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
         </li>
         
@@ -116,7 +116,7 @@
    <div class="col s12 m12 l6">
       <ul id="issues-collection" class="collection">
         <li class="collection-item avatar">
-          <i class="mdi-editor-insert-chart silver circle"></i>
+          <i class="mdi-action-explore silver circle"></i>
           <span class="collection-header">Ações</span>
           <p>As ações atutomazidas configuradas para este dispositivo</p>
           <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
