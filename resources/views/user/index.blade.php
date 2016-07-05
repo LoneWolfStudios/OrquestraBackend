@@ -32,7 +32,7 @@
         <link href="<% $STATIC_URL %>/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
     </head>
 
-    <body>
+    <body class="orquestra-color-4">
         <input type="hidden" id="APP_URL" value="<% $APP_URL %>">
 
         <div id="loader-wrapper">
@@ -43,7 +43,7 @@
 
         <header id="header" class="page-topbar">
             <div class="navbar-fixed">
-                <nav class="navbar-color">
+                <nav class="orquestra-color-2">
                     <div class="nav-wrapper">
                         <ul class="left">
                             <li>
@@ -114,41 +114,17 @@
             <div class="wrapper">
 
                 <aside id="left-sidebar-nav" ng-controller="LeftNavbarCtrl">
-                    <ul id="slide-out" class="side-nav fixed leftside-navigation">
-                        <li class="user-details cyan darken-2">
-                            <div class="row">
-                                <div class="col col s4 m4 l4">
-                                    <img src="<% $STATIC_URL %>/images/avatar.jpg" alt="" class="circle responsive-img valign profile-image">
-                                </div>
-                                <div class="col col s8 m8 l8">
-                                    <ul id="profile-dropdown" class="dropdown-content">
-                                        <li><a href="#"><i class="mdi-action-settings"></i> Settings</a>
-                                        </li>
-                                        <li><a href="#"><i class="mdi-communication-live-help"></i> Help</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#"><i class="mdi-action-lock-outline"></i> Lock</a>
-                                        </li>
-                                        <li><a href="#"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
-                                        </li>
-                                    </ul>
-                                    <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">
-                                        {{ user.name }}<i class="mdi-navigation-arrow-drop-down right"></i>
-                                    </a>
-                                    <p class="user-roal">Meu Perfil</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="bold"><a ui-sref="home" class="waves-effect waves-cyan"><i class="mdi-action-dashboard"></i> Dashboard</a>
-                        </li>
+                    <ul id="slide-out" class="side-nav fixed leftside-navigation orquestra-color-4-darken-1">
+                        
                         <li class="no-padding">
                             <ul class="collapsible collapsible-accordion">
 
-                                <li class="li-hover">
-                                    <div class="divider"></div>
+                                <li class="orquestra-color-4-darken-1" style="padding-left: 10px;">
+                                    Meus Dispositivos
                                 </li>
+                                
 
-                                <li ng-repeat="device in devices" class="bold">
+                                <li ng-repeat="device in devices" class="bold orquestra-color-4-darken-1">
                                     <a ui-sref="device_detail({deviceId: {{device.id}} })" class="waves-effect waves-cyan">
                                         <i class="mdi-action-favorite"></i> {{ device.nickname }}
                                     </a>
@@ -158,24 +134,22 @@
                                     <p class="ultra-small margin" style="padding-left: 5px;">Você ainda não possui dispositivos.</p>
                                 </li>
 
-                                <li class="li-hover">
-                                    <div class="divider"></div>
-                                </li>
-                                
-                                <li class="li-hover" >
-                                    <a ui-sref="device_create" class="waves-effect waves-light white-text btn s6">Novo Dispositivo</a>
+                                <li class="li-hover" style="position: fixed; bottom: 5px; width: 240px;">
+                                    <a ui-sref="device_create" class="waves-effect waves-light white-text btn s12 orquestra-color-1">Novo Dispositivo</a>
                                 </li>
 
                             </ul>
                         </li>
 
                     </ul>
-                    <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i class="mdi-navigation-menu"></i></a>
+                    <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only orquestra-color-1">
+                        <i class="mdi-navigation-menu"></i>
+                    </a>
                 </aside>
 
-                <section id="content">
+                <section id="content" >
 
-                    <div id="breadcrumbs-wrapper" ng-controller="BreadcumbCtrl">
+                    <div id="breadcrumbs-wrapper" ng-controller="BreadcumbCtrl" class="orquestra-color-4-darken-1">
                         <div class="header-search-wrapper grey hide-on-large-only">
                             <i class="mdi-action-search active"></i>
                             <input type="text" name="Search" class="header-search-input z-depth-2" placeholder="Explore Materialize">
@@ -183,11 +157,11 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col s12 m12 l12">
-                                    <h5 class="breadcrumbs-title">{{ breadcumb.title }}</h5>
+                                    <h5 class="breadcrumbs-title orquestra-text-3">{{ breadcumb.title }}</h5>
                                     <ol class="breadcrumbs">
-                                        <li ng-repeat="b in breadcumb.items" ng-class="{active:$last}">
-                                            <a ng-if="!$last" ui-sref="{{b.url}}">{{b.text}}</a>
-                                            <span ng-if="$last">{{b.text}}</span>
+                                        <li ng-repeat="b in breadcumb.items" ng-class="{active:$last}" >
+                                            <a ng-if="!$last" ui-sref="{{b.url}}" class="orquestra-text-1">{{b.text}}</a>
+                                            <span ng-if="$last" class="white-text">{{b.text}}</span>
                                         </li>
                                     </ol>
                                 </div>

@@ -1,0 +1,91 @@
+.orquestra-color-1 {
+    background-color: #B18352 !important;
+}
+
+.orquestra-text-1 {
+    color: #B18352 !important;
+}
+
+.orquestra-color-1-darken-1 {
+    background-color: #987146 !important;
+}
+
+.orquestra-text-1-darken-1 {
+    color: #987146 !important;
+}
+
+.orquestra-color-1-darken-2 {
+    background-color: #795b3a !important;
+}
+
+.orquestra-text-1-darken-2 {
+    color: #795b3a !important;
+}
+
+.orquestra-color-2 {
+    background-color: #1C1213 !important;
+}
+
+.orquestra-text-2 {
+    color: #1C1213 !important;
+}
+
+.orquestra-color-3 {
+    background-color: #00000B !important;
+}
+
+.orquestra-text-3 {
+    color: #00000B !important;
+}
+
+.orquestra-color-4 {
+    background-color: #E3CBAF !important;
+}
+
+.orquestra-text-4 {
+    color: #E3CBAF !important;
+}
+
+.orquestra-color-4-darken-1 {
+    background-color: #e2c7a7 !important;
+}
+
+.orquestra-text-4-darken-1 {
+    color: #e2c7a7 !important;
+}
+
+.collection {
+    border: 0px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+}
+
+.collection-item {
+    border: 0px !important;
+}
+
+.card-panel {
+    background-color: #e2c7a7 !important;
+}
+
+input[type=text],
+input[type=password], 
+input[type=email],
+input[type=url],
+input[type=time],
+input[type=date],
+input[type=datetime-local],
+input[type=tel],
+input[type=number],
+input[type=search],
+textarea.materialize-textarea {
+    border-bottom: 1px solid #B18352;
+}
+
+input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #1C1213;
+    box-shadow: 0 1px 0 0 #1C1213;
+}
+
+.input-field label {
+    color: #B18352 !important;
+}
