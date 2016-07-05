@@ -4,7 +4,7 @@ namespace Orquestra;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PinData extends Model
+class VisualizationData extends Model
 {
     
     public function __construct($tableName) 

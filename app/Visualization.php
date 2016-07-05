@@ -2,10 +2,13 @@
 
 namespace Orquestra;
 
+use DB;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Visualization extends Model
 {
+
     protected $fillable = [
         "name",
         "desc",
@@ -18,4 +21,5 @@ class Visualization extends Model
         "z_label",
         "formula"
     ];
+    
 }

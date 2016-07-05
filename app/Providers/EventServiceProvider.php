@@ -15,7 +15,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'Orquestra\Events\User\DeviceWasCreated' => [
             'Orquestra\Listeners\User\DeviceDataTableCreation',
+            'Orquestra\Listeners\User\VisualizationDataTableCreation',
         ],
+        
+        'Orquestra\Events\User\PinDataWasInserted' => [
+            'Orquestra\Listeners\User\VisualizationProcessing',
+        ]
     ];
 
     /**

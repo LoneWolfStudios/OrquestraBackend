@@ -4,7 +4,10 @@ namespace Orquestra\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 
+use DB;
+
 use Orquestra\Visualization;
+use Orquestra\PinData;
 
 use Orquestra\Http\Requests;
 use Orquestra\Http\Controllers\Controller;
@@ -27,6 +30,12 @@ class VisualizationController extends Controller
     public function find ($id) 
     {
         return Visualization::find($id);
+    }
+    
+    public function all ($id) 
+    {
+        return Visualization::find($id)
+                            ->get();
     }
     
 }

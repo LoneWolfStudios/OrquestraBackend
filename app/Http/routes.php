@@ -40,7 +40,7 @@ Route::group([
             'prefix' => 'device'
         ], function () {
         
-            Route::get('/{id}', 'DeviceController@find');    
+            Route::get('/find/{id}', 'DeviceController@find');    
             Route::get('/byUser/{id}', 'DeviceController@byUser');
             Route::post('/create', 'DeviceController@create');
             
@@ -50,7 +50,7 @@ Route::group([
             'prefix' => 'pin'
         ], function () {
         
-            Route::get('/{id}', 'PinController@find');
+            Route::get('/find/{id}', 'PinController@find');
             Route::get('/byDevice/{id}', 'PinController@byDevice');
             Route::post('/create', 'PinController@create');
             
@@ -81,9 +81,10 @@ Route::group([
             'prefix' => 'visualization'
         ], function () {
             
-            Route::get('/{id}', 'VisualizationController@find');
+            Route::get('/find/{id}', 'VisualizationController@find');
             Route::get('/byDevice/{id}', 'VisualizationController@byDevice');
             Route::post('/create', 'VisualizationController@create');
+            Route::get('/all/{id}', 'VisualizationController@all');
             
         });
         

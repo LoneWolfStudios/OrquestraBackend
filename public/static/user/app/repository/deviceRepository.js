@@ -5,7 +5,7 @@ OrquestraUser.service('DeviceRepository', ['$http', '$q', 'Device',
         repository.find = function (id) {
             var deferred = $q.defer();
             
-            $http.get(api_v1("device/" + id)).then(
+            $http.get(api_v1("device/find/" + id)).then(
                 function (res) {
                     var device = new Device();
                         

@@ -5,13 +5,11 @@ namespace Orquestra\Listeners\User;
 use Schema;
 use Illuminate\Database\Schema\Blueprint;
 
+use Orquestra\Events\User\DeviceWasCreated;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use Orquestra\Events\User\DeviceWasCreated;
-
-
-class DeviceDataTableCreation implements ShouldQueue
+class VisualizationDataTableCreation
 {
     /**
      * Create the event listener.
@@ -26,17 +24,17 @@ class DeviceDataTableCreation implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  DeviceWasCreted  $event
+     * @param  DeviceWasCreated  $event
      * @return void
      */
     public function handle(DeviceWasCreated $event)
     {
         $device = $event->device;
         
-        Schema::create('device_data_' . $device->id, function (Blueprint $table) use ($event) {
+        Schema::create('visualization_data_' . $device->id, function (Blueprint $table) use ($event) {
             $table->increments('id');
             
-            $table->unsignedInteger('pin_id')->nullable(false);
+            $table->unsignedInteger('visualization_id')->nullable(false);
             $table->unsignedInteger('device_id')->default($event->device->id);
             
             $table->double('value', 15, 8);

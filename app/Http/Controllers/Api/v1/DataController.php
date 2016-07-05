@@ -4,7 +4,13 @@ namespace Orquestra\Http\Controllers\Api\v1;
 
 use Illuminate\Http\Request;
 
+use DB;
+use Event;
+
+use Orquestra\Events\User\PinDataWasInserted;
+
 use Orquestra\PinData;
+use Orquestra\Visualization;
 use Orquestra\Device;
 use Orquestra\Pin;
 
@@ -27,8 +33,8 @@ class DataController extends Controller
             
             $pd->save();
         }
-        
-        return 1;
+
+        Event::fire(new PinDataWasInserted($device, $request));
     }
     
 }

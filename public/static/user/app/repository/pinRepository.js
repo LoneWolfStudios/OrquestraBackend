@@ -5,7 +5,7 @@ OrquestraUser.service('PinRepository', ['$q', '$http', 'Pin',
         repository.find = function (id) {
             var deferred = $q.defer();
             
-            $http.get(api_v1('pin/' + id)).then(
+            $http.get(api_v1('pin/find/' + id)).then(
                 function (res) {
                     var pin = new Pin();
                     

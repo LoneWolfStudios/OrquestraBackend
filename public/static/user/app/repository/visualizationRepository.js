@@ -5,7 +5,7 @@ OrquestraUser.service('VisualizationRepository', ['$http', '$q', 'Visualization'
         repository.find = function (id) {
             var deferred = $q.defer();
             
-            $http.get(api_v1("visualization/" + id)).then(
+            $http.get(api_v1("visualization/find/" + id)).then(
                 function (res) {
                     var visualization = new Visualization();
                         
