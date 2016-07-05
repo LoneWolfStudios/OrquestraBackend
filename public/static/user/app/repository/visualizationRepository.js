@@ -1,5 +1,5 @@
-OrquestraUser.service('VisualizationRepository', ['$http', '$q', 'Visualization',
-    function ($http, $q, Visualization) {
+OrquestraUser.service('VisualizationRepository', ['$http', '$q', 'Visualization', 'VisualizationData',
+    function ($http, $q, Visualization, VisualizationData) {
         var repository = {};
         
         repository.find = function (id) {
@@ -37,6 +37,7 @@ OrquestraUser.service('VisualizationRepository', ['$http', '$q', 'Visualization'
             return deferred.promise;
         };
         
+        
         repository.byDevice = function (id) {
             var deferred = $q.defer();
             
@@ -51,6 +52,26 @@ OrquestraUser.service('VisualizationRepository', ['$http', '$q', 'Visualization'
                     });
                     
                     deferred.resolve(visualizations);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.dataAll = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("visualization/data/" + id + "/all")).then(
+                function (res) {
+                    var data = _.map(res.data, function (json) {
+                        var vd = new VisualizationData();
+                        
+                        attr(vd, json);
+                        
+                        return vd;
+                    });
+                    
+                    deferred.resolve(data);
                 }
             );
             

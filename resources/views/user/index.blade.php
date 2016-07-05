@@ -343,14 +343,18 @@
     <!--prism
     <script type="text/javascript" src="<% $STATIC_URL %>/js/prism/prism.js"></script>-->
     <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/chartist-js/chartist.min.js"></script>
+    <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/flot-chart/jquery.flot.min.js"></script>
+    <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/flot-chart/jquery.flot.pie.js"></script>
+    <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/flot-chart/jquery.flot.stack.js"></script>
+    <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins/flot-chart/jquery.flot.time.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/js/plugins.min.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/js/custom-script.js"></script>
+    
     <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/underscore/underscore-min.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/sparkline/dist/jquery.sparkline.min.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-
+    <script type="text/javascript" src="<% $STATIC_URL %>/bower_components/angular-flot/angular-flot.js"></script>
 
     <script type="text/javascript" src="<% $STATIC_URL %>/dist/0.0.1/orquestra.js"></script>
 

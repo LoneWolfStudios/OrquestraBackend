@@ -1,5 +1,5 @@
-<div ng-controller="PinDetailCtrl">
-    <p class="caption">{{ pin.desc }}</p>
+<div ng-controller="VisualizationDetailCtrl">
+    <p class="caption">{{ visualization.desc }}</p>
     <div class="divider"></div>
     
     <br>

@@ -38,4 +38,14 @@ class VisualizationController extends Controller
                             ->get();
     }
     
+    public function dataAll ($id) 
+    {
+        $v = Visualization::find($id);
+        
+        return DB::table("visualization_data_$v->device_id")
+                 ->where('visualization_id', $id)
+                 ->where('active', true)
+                 ->get();
+    }
+    
 }

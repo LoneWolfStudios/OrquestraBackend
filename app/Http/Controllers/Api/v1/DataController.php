@@ -37,4 +37,14 @@ class DataController extends Controller
         Event::fire(new PinDataWasInserted($device, $request));
     }
     
+    public function byPin($id) 
+    {
+        $pin = Pin::find($id);
+        
+        return DB::table("device_data_$pin->device_id")
+                 ->where('pin_id', $id)
+                 ->where('active', true)
+                 ->get();
+    }
+    
 }

@@ -61,6 +61,7 @@ Route::group([
         ], function () {
             
             Route::post('/send', 'DataController@send');
+            Route::get('/byPin/{id}', 'DataController@byPin');
             
         });
         
@@ -85,6 +86,14 @@ Route::group([
             Route::get('/byDevice/{id}', 'VisualizationController@byDevice');
             Route::post('/create', 'VisualizationController@create');
             Route::get('/all/{id}', 'VisualizationController@all');
+            
+            Route::group([
+                'prefix' => 'data/{id}'
+            ], function () {
+                
+                Route::get('/all', 'VisualizationController@dataAll');
+                
+            });
             
         });
         

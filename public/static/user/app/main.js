@@ -1,4 +1,4 @@
-var OrquestraUser = angular.module('OrquestraUser', ['ui.router']);
+var OrquestraUser = angular.module('OrquestraUser', ['ui.router', 'angular-flot']);
 
 var APP_URL = $("#APP_URL").val();
 

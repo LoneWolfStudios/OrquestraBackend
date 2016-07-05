@@ -1,9 +1,9 @@
-OrquestraUser.controller('PinDetailCtrl', ['$scope', '$stateParams', 'Breadcumb', 'PinRepository', 'PinDataRepository',
-    function ($scope, $stateParams, Breadcumb, PinRepository, PinDataRepository) {
+OrquestraUser.controller('VisualizationDetailCtrl', ['$scope', '$stateParams', 'Breadcumb', 'VisualizationRepository',
+    function ($scope, $stateParams, Breadcumb, VisualizationRepository) {
         Breadcumb.items = [
             { url: 'home', text: 'Dashboard' },
             { url: 'device_detail({ deviceId: ' + $stateParams.deviceId + '})', text: 'Dispositivo' },
-            { text: 'Pino' }
+            { text: 'Visualização' }
         ];
         
         $scope.chartOptions = {
@@ -26,18 +26,18 @@ OrquestraUser.controller('PinDetailCtrl', ['$scope', '$stateParams', 'Breadcumb'
             }
         };
         
-        PinRepository.find($stateParams.pinId).then(
-            function onSuccess (pin) {
-                $scope.pin = pin;
+        VisualizationRepository.find($stateParams.visualizationId).then(
+            function onSuccess (visualization) {
+                $scope.visualization = visualization;
                 
-                Breadcumb.title = pin.name;
+                Breadcumb.title = visualization.name;
                 
-                PinDataRepository.byPin(pin.id).then(
+                VisualizationRepository.dataAll(visualization.id).then(
                     function onSuccess (list) {
                         $scope.chartDataset = [
                             {
                                 color: "blue",
-                                label: pin.name,
+                                label: visualization.name,
                                 shadowSize: 0,
                                 data: _.map(list, function (e) {
                                     return [new Date(e.created_at), e.value];
@@ -46,12 +46,12 @@ OrquestraUser.controller('PinDetailCtrl', ['$scope', '$stateParams', 'Breadcumb'
                         ];
                     },
                     function onError (res) {
-                        alert("Não foi possivel obter os dados do pino.");
+                        alert("Não foi possivel obter os dados da visualização.");
                     }
                 );
             },
             function onError () {
-                alert("Não foi possivel obter informações do pino");
+                alert("Não foi possivel obter informações da visualização");
             }
         );
     }

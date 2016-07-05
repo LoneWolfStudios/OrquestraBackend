@@ -14,10 +14,19 @@ OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
             })
             
             .state('visualization_create', {
-                url: '/{deviceId}/visualization/create',
+                url: '/device/{deviceId}/visualization/create',
                 views: {
                     MainContent: {
                         templateUrl: view('visualization/create')
+                    }
+                }
+            })
+            
+            .state('visualization_detail', {
+                url: '/device/{deviceId}/visualization/{visualizationId}',
+                views: {
+                    MainContent: {
+                        templateUrl: view('visualization/detail')
                     }
                 }
             })

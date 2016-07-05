@@ -1,4 +1,4 @@
-var OrquestraUser = angular.module('OrquestraUser', ['ui.router']);
+var OrquestraUser = angular.module('OrquestraUser', ['ui.router', 'angular-flot']);
 
 var APP_URL = $("#APP_URL").val();
 
@@ -42,6 +42,15 @@ OrquestraUser.factory('Pin', [
     }    
 ]);
 
+OrquestraUser.factory('PinData', [
+    function () {
+        var PinData = new Function();
+        
+        return PinData;
+    }    
+]);
+
+
 OrquestraUser.factory('User', ['DeviceRepository',
     function (DeviceRepository) {
         var User = new Function();
@@ -61,6 +70,16 @@ OrquestraUser.factory('Visualization', [
         return Visualization;
     }    
 ]);
+
+OrquestraUser.factory('VisualizationData', [
+    function () {
+        var VisualizationData = new Function();
+        
+        return VisualizationData;
+    }    
+]);
+
+
 
 OrquestraUser.service('Breadcumb', [
     function () {
@@ -165,6 +184,34 @@ OrquestraUser.service('DeviceRepository', ['$http', '$q', 'Device',
     }
 ]);
 
+OrquestraUser.service('PinDataRepository', ['$q', '$http', 'PinData',
+    function ($q, $http, PinData) {
+        var repository = {};
+        
+        repository.byPin = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("data/byPin/" + id)).then(
+                function (res) {
+                    var data = _.map(res.data, function (json) {
+                        var pd = new PinData();
+                        
+                        attr(pd, json);
+                        
+                        return pd;
+                    });
+                    
+                    deferred.resolve(data);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        return repository;
+    }
+]);
+
 OrquestraUser.service('PinRepository', ['$q', '$http', 'Pin',
     function ($q, $http, Pin) {
         var repository = {};
@@ -228,8 +275,8 @@ OrquestraUser.service('PinRepository', ['$q', '$http', 'Pin',
     }
 ]);
 
-OrquestraUser.service('VisualizationRepository', ['$http', '$q', 'Visualization',
-    function ($http, $q, Visualization) {
+OrquestraUser.service('VisualizationRepository', ['$http', '$q', 'Visualization', 'VisualizationData',
+    function ($http, $q, Visualization, VisualizationData) {
         var repository = {};
         
         repository.find = function (id) {
@@ -267,6 +314,7 @@ OrquestraUser.service('VisualizationRepository', ['$http', '$q', 'Visualization'
             return deferred.promise;
         };
         
+        
         repository.byDevice = function (id) {
             var deferred = $q.defer();
             
@@ -281,6 +329,26 @@ OrquestraUser.service('VisualizationRepository', ['$http', '$q', 'Visualization'
                     });
                     
                     deferred.resolve(visualizations);
+                }
+            );
+            
+            return deferred.promise;
+        };
+        
+        repository.dataAll = function (id) {
+            var deferred = $q.defer();
+            
+            $http.get(api_v1("visualization/data/" + id + "/all")).then(
+                function (res) {
+                    var data = _.map(res.data, function (json) {
+                        var vd = new VisualizationData();
+                        
+                        attr(vd, json);
+                        
+                        return vd;
+                    });
+                    
+                    deferred.resolve(data);
                 }
             );
             
@@ -433,19 +501,60 @@ OrquestraUser.controller('PinCreateCtrl', ['$scope', '$state', '$stateParams', '
     }
 ]);
 
-OrquestraUser.controller('PinDetailCtrl', ['$scope', '$stateParams', 'Breadcumb', 'PinRepository',
-    function ($scope, $stateParams, Breadcumb, PinRepository) {
+OrquestraUser.controller('PinDetailCtrl', ['$scope', '$stateParams', 'Breadcumb', 'PinRepository', 'PinDataRepository',
+    function ($scope, $stateParams, Breadcumb, PinRepository, PinDataRepository) {
         Breadcumb.items = [
             { url: 'home', text: 'Dashboard' },
             { url: 'device_detail({ deviceId: ' + $stateParams.deviceId + '})', text: 'Dispositivo' },
             { text: 'Pino' }
         ];
         
+        $scope.chartOptions = {
+            legend: {
+                show: true,
+                container: "#chart-legends"
+            },
+            
+            series: {
+                lines: {
+                    lineWidth: 1
+                }
+            },
+            
+            xaxis: {
+                mode: "time",
+                timezone: "browser",
+                position: "bottom",
+                timeFormat: "%H:%M:%S"
+            }
+        };
+        
         PinRepository.find($stateParams.pinId).then(
-            function (pin) {
+            function onSuccess (pin) {
                 $scope.pin = pin;
                 
                 Breadcumb.title = pin.name;
+                
+                PinDataRepository.byPin(pin.id).then(
+                    function onSuccess (list) {
+                        $scope.chartDataset = [
+                            {
+                                color: "blue",
+                                label: pin.name,
+                                shadowSize: 0,
+                                data: _.map(list, function (e) {
+                                    return [new Date(e.created_at), e.value];
+                                })
+                            }
+                        ];
+                    },
+                    function onError (res) {
+                        alert("Não foi possivel obter os dados do pino.");
+                    }
+                );
+            },
+            function onError () {
+                alert("Não foi possivel obter informações do pino");
             }
         );
     }
@@ -504,6 +613,66 @@ OrquestraUser.controller('VisualizationCreateCtrl', ['$scope', '$state', '$state
     }
 ]);
 
+OrquestraUser.controller('VisualizationDetailCtrl', ['$scope', '$stateParams', 'Breadcumb', 'VisualizationRepository',
+    function ($scope, $stateParams, Breadcumb, VisualizationRepository) {
+        Breadcumb.items = [
+            { url: 'home', text: 'Dashboard' },
+            { url: 'device_detail({ deviceId: ' + $stateParams.deviceId + '})', text: 'Dispositivo' },
+            { text: 'Visualização' }
+        ];
+        
+        $scope.chartOptions = {
+            legend: {
+                show: true,
+                container: "#chart-legends"
+            },
+            
+            series: {
+                lines: {
+                    lineWidth: 1
+                }
+            },
+            
+            xaxis: {
+                mode: "time",
+                timezone: "browser",
+                position: "bottom",
+                timeFormat: "%H:%M:%S"
+            }
+        };
+        
+        VisualizationRepository.find($stateParams.visualizationId).then(
+            function onSuccess (visualization) {
+                $scope.visualization = visualization;
+                
+                Breadcumb.title = visualization.name;
+                
+                VisualizationRepository.dataAll(visualization.id).then(
+                    function onSuccess (list) {
+                        $scope.chartDataset = [
+                            {
+                                color: "blue",
+                                label: visualization.name,
+                                shadowSize: 0,
+                                data: _.map(list, function (e) {
+                                    return [new Date(e.created_at), e.value];
+                                })
+                            }
+                        ];
+                    },
+                    function onError (res) {
+                        alert("Não foi possivel obter os dados da visualização.");
+                    }
+                );
+            },
+            function onError () {
+                alert("Não foi possivel obter informações da visualização");
+            }
+        );
+    }
+]);
+
+
 OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
         
@@ -520,10 +689,19 @@ OrquestraUser.config(['$stateProvider', '$urlRouterProvider',
             })
             
             .state('visualization_create', {
-                url: '/{deviceId}/visualization/create',
+                url: '/device/{deviceId}/visualization/create',
                 views: {
                     MainContent: {
                         templateUrl: view('visualization/create')
+                    }
+                }
+            })
+            
+            .state('visualization_detail', {
+                url: '/device/{deviceId}/visualization/{visualizationId}',
+                views: {
+                    MainContent: {
+                        templateUrl: view('visualization/detail')
                     }
                 }
             })
