@@ -1,5 +1,9 @@
 <?php
 
+Route::get('/ping', function () {
+    return "Pong!";
+});
+
 Route::group([
     'namespace' => 'Auth',
     'prefix' => 'auth',
@@ -9,6 +13,17 @@ Route::group([
     Route::get('/login', 'AuthController@getLogin');
     Route::post('/login', 'AuthController@postLogin');
     
+    Route::post('/api_login', 'AuthController@postApiLogin');
+    
+});
+
+Route::group([
+    'namespace' => 'Auth',
+    'prefix' => 'auth'
+], function () {
+
+    Route::post('/api_login', 'AuthController@postApiLogin');
+     
 });
 
 Route::group([

@@ -2,6 +2,8 @@
 
 namespace Orquestra\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+
 use Orquestra\User;
 use Validator;
 use Orquestra\Http\Controllers\Controller;
@@ -75,6 +77,19 @@ class AuthController extends Controller
         Auth::logout();
     
         return redirect()->to('auth/login');
+    }
+    
+    public function postApiLogin (Request $request) 
+    {
+        if (Auth::attempt([
+            "email" => $request->email,
+            "password" => $request->password
+        ])) 
+        {
+            return Auth::user();
+        }
+        
+        return response()->json("Error", 500);
     }
     
 }
