@@ -23,7 +23,8 @@ Route::group([
 
 Route::group([
     'namespace' => 'Api',
-    'prefix' => 'api'
+    'prefix' => 'api',
+    'middleware' => 'auth:api'
 ], function () {
     
     Route::group([

@@ -31,6 +31,19 @@
                         </div>
                         
                         <div class="row">
+                            <div class="input-field col s12 m12 l12">
+                                <select ng-model="constraint.type" id="input05" class="browser-default">
+                                    <option value="maior">Maior que</option>
+                                    <option value="maior iqual">Maior igual a</option>
+                                    <option value="menor">Menor</option>
+                                    <option value="maior iqual">Menor igual a</option>
+                                    <option value="iqual">Igual a</option>
+                                </select>
+                                <label for="input05"  ng-class="{active: constraint.type}">Tipo de Comparação</label>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
                             <div class="input-field col s12">
                                 <input id="limit" type="number" ng-model="constraint.value">
                                 <label for="limit" class="">Limit</label>

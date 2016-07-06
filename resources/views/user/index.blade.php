@@ -34,6 +34,7 @@
 
     <body class="orquestra-color-4">
         <input type="hidden" id="APP_URL" value="<% $APP_URL %>">
+        <input type="hidden" id="API_TOKEN" value="<% $API_TOKEN %>">
 
         <div id="loader-wrapper">
             <div id="loader"></div>
