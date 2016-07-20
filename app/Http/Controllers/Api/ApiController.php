@@ -11,9 +11,9 @@ use Orquestra\Http\Controllers\Controller;
 class ApiController extends Controller
 {
     protected $user;
-    
-    function __construct() 
+
+    function __construct()
     {
-        $this->user = Auth::user();
+        $this->user = Auth::guard('api')->user();
     }
 }
