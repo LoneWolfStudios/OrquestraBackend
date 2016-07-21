@@ -32,7 +32,7 @@ class DataController extends Controller
 
             $pd->pin_id = collect($pins)->search(function ($item) use ($value) {
                 return $item->name == $value["name"];
-            })->id;
+            })["id"];
 
             $pd->value = $value["value"];
 
