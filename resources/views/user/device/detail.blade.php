@@ -1,9 +1,20 @@
 <div id="work-collections" class="seaction" ng-controller="DeviceDetailCtrl">
-  
-  <p class="caption">{{ device.desc }}</p>
-    
+
+    <div class="row">
+        <div class="col s12 m8 l9">
+            <p class="caption">{{ device.desc }}</p>
+        </div>
+
+        <div class="col s12 m4 l3">
+            <a class="waves-effect waves-light btn right orquestra-color-1-darken-2"
+               href="<% $APP_URL %>/api/v1/device/getSeed/{{ device.id }}?api_token=<% $API_TOKEN %>">Obter Maestro
+            </a>
+        </div>
+    </div>
+
+
   <div class="row">
-    
+
     <div class="col s12 m12 l6">
       <ul id="projects-collection" class="collection">
         <li class="collection-item avatar orquestra-color-4-darken-1">
@@ -38,10 +49,10 @@
         <li class="collection-item orquestra-color-4-darken-1" ng-if="pins.length == 0">
             <span>Este dispositivo não possui pinos.</span>
         </li>
-        
+
       </ul>
     </div>
-    
+
     <div class="col s12 m12 l6">
       <ul id="issues-collection" class="collection">
         <li class="collection-item avatar orquestra-color-4-darken-1">
@@ -50,7 +61,7 @@
           <p>As visualizações configuradas para este dispositivo</p>
           <a ui-sref="visualization_create({deviceId: device.id})" class="secondary-content orquestra-text-1">Novo</a>
         </li>
-        
+
         <li class="collection-item orquestra-color-4-darken-1" ng-repeat="visualization in visualizations">
           <div class="row">
             <div class="col s5">
@@ -73,15 +84,15 @@
             </div>
           </div>
         </li>
-       
+
         <li class="collection-item orquestra-color-4-darken-1" ng-if="visualizations.length == 0">
             <span>Este dispositivo não possui visualizações.</span>
         </li>
-        
+
    </ul>
    </div>
  </div>
- 
+
  <div class="row">
     <div class="col s12 m12 l6">
       <ul id="issues-collection" class="collection">
@@ -91,7 +102,7 @@
           <p>Os gatilhos configuradas para este dispositivo</p>
           <a ui-sref="constraint_create({deviceId: device.id})" class="secondary-content orquestra-text-1">Novo</a>
         </li>
-        
+
         <li class="collection-item orquestra-color-4-darken-1" ng-repeat="constraint in constraints">
           <div class="row">
             <div class="col s5">
@@ -114,14 +125,14 @@
             </div>
           </div>
        </li>
-       
+
        <li class="collection-item orquestra-color-4-darken-1" ng-if="constraints.length == 0">
             <span>Este dispositivo não possui gatilhos.</span>
         </li>
-       
+
    </ul>
    </div>
-   
+
    <div class="col s12 m12 l6">
       <ul id="issues-collection" class="collection">
         <li class="collection-item avatar orquestra-color-4-darken-1">
@@ -130,7 +141,7 @@
           <p>As ações atutomazidas configuradas para este dispositivo</p>
           <a href="#" class="secondary-content orquestra-text-1">Novo</a>
         </li>
-        
+
         <li class="collection-item orquestra-color-4-darken-1">
           <div class="row">
             <div class="col s7">
@@ -142,16 +153,16 @@
             </div>
             <div class="col s3">
               <div class="progress">
-               <div class="determinate" style="width: 70%"></div>   
-             </div>                                                
+               <div class="determinate" style="width: 70%"></div>
+             </div>
            </div>
          </div>
        </li>
-       
+
    </ul>
    </div>
-   
+
  </div>
- 
+
 </div>
 <!-- Floating Action Button -->

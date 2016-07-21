@@ -19,32 +19,37 @@ use Orquestra\Http\Controllers\Controller;
 
 class DataController extends Controller
 {
-    
-    public function send(Request $request) 
+
+    public function send(Request $request)
     {
         $device = Device::find($request->device_id);
-        
-        foreach ($request->data as $key => $value) 
+        $pins = Pin::where('active', true)
+                   ->get();
+
+        foreach ($request->data as $key => $value)
         {
             $pd = new PinData("device_data_" . $device->id);
-            
-            $pd->pin_id = $value["pin_id"];
+
+            $pd->pin_id = collect($pins)->search(function ($item) {
+                return $item->name == $value["name"];
+            })->id;
+
             $pd->value = $value["value"];
-            
+
             $pd->save();
         }
 
         Event::fire(new PinDataWasInserted($device, $request));
     }
-    
-    public function byPin($id) 
+
+    public function byPin($id)
     {
         $pin = Pin::find($id);
-        
+
         return DB::table("device_data_$pin->device_id")
                  ->where('pin_id', $id)
                  ->where('active', true)
                  ->get();
     }
-    
+
 }
