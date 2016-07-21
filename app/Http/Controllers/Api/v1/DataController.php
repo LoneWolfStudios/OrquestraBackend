@@ -30,7 +30,7 @@ class DataController extends Controller
         {
             $pd = new PinData("device_data_" . $device->id);
 
-            $pd->pin_id = collect($pins)->search(function ($item) {
+            $pd->pin_id = collect($pins)->search(function ($item) use ($value) {
                 return $item->name == $value["name"];
             })->id;
 
