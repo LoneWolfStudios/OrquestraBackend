@@ -28,7 +28,7 @@ class DataController extends Controller
         {
             $pd = new PinData("device_data_" . $device->id);
 
-            $pd->pin_id = $value["id"];
+            $pd->pin_id = $value["pin_id"];
             $pd->value = $value["value"];
 
             $pd->save();
